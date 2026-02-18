@@ -130,6 +130,54 @@ describe('scaffold', () => {
     expect(postToolUse[0].matcher).toBe('Write|Edit');
   });
 
+  it('configures autonomous agent hooks that write to CLAUDE.md', async () => {
+    const tools = await selectTools(mockDiscovery);
+    const result = await scaffold(
+      { discovery: mockDiscovery, tools },
+      { outputDir: testOutputDir }
+    );
+
+    const settings = await fs.readJSON(
+      path.join(result.projectPath, '.claude', 'settings.json')
+    );
+
+    // PostToolUse uses prompt type for fast gating (no agent overhead)
+    const postToolUse = settings.hooks.PostToolUse[0].hooks[0];
+    expect(postToolUse.type).toBe('prompt');
+
+    // Stop uses agent type and runs all four checks
+    const stop = settings.hooks.Stop[0].hooks[0];
+    expect(stop.type).toBe('agent');
+    expect(stop.prompt).toContain('Trust Deep Scan');
+    expect(stop.prompt).toContain('Strategy Alignment');
+    expect(stop.prompt).toContain('EIID');
+    expect(stop.prompt).toContain('Design Audit');
+    expect(stop.prompt).toContain('shadcnblocks');
+    expect(stop.prompt).toContain('Test Report');
+    expect(stop.prompt).toContain('Security Findings');
+    expect(stop.prompt).toContain('Architecture Decisions');
+    expect(stop.prompt).toContain('Design Findings');
+  });
+
+  it('generates CLAUDE.md with Security Findings and Test Report sections', async () => {
+    const tools = await selectTools(mockDiscovery);
+    const result = await scaffold(
+      { discovery: mockDiscovery, tools },
+      { outputDir: testOutputDir }
+    );
+
+    const claudeMd = await fs.readFile(
+      path.join(result.projectPath, 'CLAUDE.md'),
+      'utf-8'
+    );
+
+    expect(claudeMd).toContain('## Security Findings');
+    expect(claudeMd).toContain('## Design Findings');
+    expect(claudeMd).toContain('## Test Report');
+    expect(claudeMd).toContain('## Architecture Decisions');
+    expect(claudeMd).toContain('autonomous');
+  });
+
   it('generates 5 subagent files in .claude/agents/', async () => {
     const tools = await selectTools(mockDiscovery);
     const result = await scaffold(

@@ -194,12 +194,14 @@ Skills are checklists with teeth. They check code against specific criteria, rep
 
 **Automatically via hooks** (configured in `.claude/settings.json`):
 
+Fast gates during work, full audit at the end. Zero overhead while building. One comprehensive report before stopping.
+
 | When | What Happens |
 |------|-------------|
 | Session starts | Detects first run (missing node_modules, .env.local). Suggests init skills. |
-| Before a shell command runs | Trust checks for secrets, destructive operations, injection. |
-| After a file is written or edited | Trust scans for hardcoded keys, XSS, PII exposure. |
-| Before stopping | Testing runs the full suite. Blocks if anything fails. |
+| Before a shell command runs | Fast gate on dangerous commands (credentials, rm -rf, injection). |
+| After a file is written or edited | Fast gate on obvious security issues (hardcoded secrets, injection). |
+| Before stopping | Full audit agent runs four checks: tests, trust deep scan, strategy alignment, design rules. Writes all findings to CLAUDE.md. Blocks if tests fail. |
 
 **On demand via slash commands:**
 
@@ -315,7 +317,7 @@ npm install
 ### Commands
 
 ```bash
-npm test              # 95 tests across 5 files
+npm test              # 97 tests across 5 files
 npm run type-check    # TypeScript strict mode
 npm run dev           # Run CLI in development mode
 npm run build         # Compile to dist/
@@ -331,14 +333,14 @@ npm run lint          # ESLint
 
 ### Tests
 
-95 tests across five files:
+97 tests across five files:
 
 | File | Count | What It Tests |
 |------|-------|--------------|
 | `analyze.test.ts` | 18 | Claude API mocking, JSON validation, markdown stripping |
 | `catalog.test.ts` | 24 | Channel mapping, tool selection, category handling |
 | `discovery-core.test.ts` | 10 | Validation pipeline, error transformation |
-| `scaffold.test.ts` | 23 | File generation, hooks, agents, skills, design tokens, Playwright |
+| `scaffold.test.ts` | 25 | File generation, hooks, agents, skills, design tokens, Playwright |
 | `schema.test.ts` | 20 | Zod validation edge cases, defaults, JSON Schema output |
 
 ## Conceptual References

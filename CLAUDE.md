@@ -77,7 +77,7 @@ test/
   analyze.test.ts                18 tests (API mocking, validation, markdown stripping)
   catalog.test.ts                24 tests (channel mapping, tool selection, categories)
   discovery-core.test.ts         10 tests (validation pipeline, error handling)
-  scaffold.test.ts               23 tests (file generation, hooks, agents, skills, design tokens)
+  scaffold.test.ts               25 tests (file generation, hooks, agents, skills, design tokens)
   schema.test.ts                 20 tests (Zod validation edge cases)
   fixtures/mock-discovery.json   Test fixture
 tools-catalog.json               GDPR-verified tools with categories and EIID mapping
@@ -108,9 +108,9 @@ Skills activate via Claude Code hooks in `.claude/settings.json`:
 
 ```
 SessionStart            first-run detection, suggests init skills
-PreToolUse(Bash)        trust checks shell commands before execution
-PostToolUse(Write|Edit) trust scans file changes after writing
-Stop                    testing runs full suite, blocks if tests fail
+PreToolUse(Bash)        fast gate on dangerous commands
+PostToolUse(Write|Edit) fast gate on obvious security issues (credentials, injection)
+Stop                    full audit agent: tests + trust + strategy + design, writes all findings to CLAUDE.md
 ```
 
 Eleven slash commands:
@@ -162,7 +162,7 @@ Playwright has two roles: testing (primary) and browser-based scraping (secondar
 
 ```bash
 npm install              # install dependencies
-npm test                 # 95 tests across 5 files
+npm test                 # 97 tests across 5 files
 npm run type-check       # TypeScript strict mode
 npm run dev              # run CLI in dev mode (tsx)
 npm run build            # compile to dist/

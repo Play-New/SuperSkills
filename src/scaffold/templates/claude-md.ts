@@ -161,11 +161,19 @@ ${testingTools || '- None selected'}
 function generateArchitectureSection(): string {
   return `## Architecture Decisions
 
-<!-- strategy skill appends decisions here in format: -->
-<!-- ### YYYY-MM-DD - Decision Title -->
-<!-- **Context:** Why this decision was needed -->
-<!-- **Decision:** What was decided -->
-<!-- **Consequences:** What this means for the project -->
+<!-- strategy agent appends decisions and opportunity findings here -->
+
+## Security Findings
+
+<!-- trust agent appends security findings here automatically after every file change -->
+
+## Design Findings
+
+<!-- design audit appends UI violations here automatically before every stop -->
+
+## Test Report
+
+<!-- testing agent appends test results here automatically before every stop -->
 `;
 }
 
@@ -209,12 +217,14 @@ Five subagents in \`.claude/agents/\` provide specialized competencies:
 - **efficiency** — Performance, costs, optimization
 - **testing** — Test verification, regression prevention
 
-### Hooks (automatic)
+### Hooks (autonomous)
+
+Fast gates during work, full audit at the end. The Stop agent writes all findings to this file.
 
 - **SessionStart**: Detects first run, suggests init skills
-- **PreToolUse (Bash)**: Trust blocks dangerous commands
-- **PostToolUse (Write|Edit)**: Trust scans for security issues
-- **Stop**: Testing verifies all tests pass before stopping
+- **PreToolUse (Bash)**: Fast gate on dangerous commands
+- **PostToolUse (Write|Edit)**: Fast gate on obvious security issues (credentials, injection)
+- **Stop**: Full audit agent runs four checks (tests, trust, strategy, design), appends findings to this file, blocks if tests fail
 
 ### Rules
 

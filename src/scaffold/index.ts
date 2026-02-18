@@ -177,14 +177,71 @@ function createAgentTeamConfig(discovery: DiscoveryResult, tools?: SelectionResu
         matcher: 'Write|Edit',
         hooks: [{
           type: 'prompt',
-          prompt: 'Security scan for [projectName]. Check this file change for: hardcoded API keys, SQL injection, XSS, PII exposure, missing auth. $ARGUMENTS. Respond {"ok": true} or {"ok": false, "reason": "..."}.',
-          timeout: 20
+          prompt: 'Security gate for [projectName]. Check this file change for: hardcoded API keys or secrets, SQL injection, XSS, auth bypass, PII in logs or URLs. $ARGUMENTS. Respond {"ok": true} if safe, {"ok": false, "reason": "..."} if a blocking issue is found. Only block on clear violations, not potential issues.',
+          timeout: 15
         }]
       }],
       stop: [{
         hooks: [{
           type: 'agent',
-          prompt: 'Verify before stopping: 1) Run `npm test` and check all tests pass. 2) If Playwright tests exist, run them. 3) Check no TODO items left incomplete. $ARGUMENTS. Respond {"ok": true} if everything passes, {"ok": false, "reason": "..."} with failure details.',
+          prompt: `Pre-stop audit for [projectName]. Four checks, one report.
+
+## Step 1: Run Tests
+
+Run \`npm test\`. If Playwright tests exist in tests/e2e/, run \`npx playwright test\` too.
+
+## Step 2: Trust Deep Scan
+
+Scan all files changed in this session for:
+1. Hardcoded API keys, passwords, tokens, secrets
+2. SQL injection (unsanitized user input in queries)
+3. XSS (unescaped user content rendered as HTML)
+4. Auth bypass (missing auth checks on protected routes)
+5. PII exposure (personal data in logs, errors, URLs)
+6. Missing RLS policies on Supabase tables
+7. Secrets in environment config committed to git
+
+## Step 3: Strategy Alignment Check
+
+Read CLAUDE.md to understand the EIID mapping and project goals.
+Check recent changes against the EIID framework:
+- Do changes support one of the four layers (Enrichment, Inference, Interpretation, Delivery)?
+- Any scope creep?
+- Any new opportunities across the four layers?
+
+## Step 4: Design Audit
+
+Scan all .tsx files for violations of these five rules:
+1. **shadcnblocks FIRST** — If a shadcnblocks block exists for a UI section, use it. Install: \`npx shadcn add @shadcnblocks/[name]\`.
+2. **shadcn base SECOND** — If no block fits, use standard shadcn components. Install: \`npx shadcn add [component]\`.
+3. **NEVER custom CSS classes** — No .my-card, no .custom-header. Tailwind utilities only.
+4. **Global token file required** — src/app/globals.css defines CSS custom properties. tailwind.config.ts extends from them.
+5. **Zero inline arbitrary values** — No text-[#FF5733], no p-[13px]. Tailwind scale values and theme classes only.
+Also check: color contrast >= 4.5:1, focus states, alt text, form labels.
+
+## Step 5: Report to CLAUDE.md
+
+Read CLAUDE.md, then append all findings using the Edit tool.
+
+### Test Report section ("## Test Report")
+**Date:** [date] | **Passed:** [count] | **Failed:** [count] | **Skipped:** [count]
+[failure details if any]
+
+### Security Findings section ("## Security Findings")
+Per issue: **Severity** (BLOCK|HIGH|MEDIUM|LOW), **File** (path:line), **Issue**, **Fix**.
+
+### Architecture Decisions section ("## Architecture Decisions")
+Per finding: **Type** (alignment-check|opportunity|drift-warning), **Layer** (enrichment|inference|interpretation|delivery), **Summary**, **Recommendation**.
+
+### Design Findings section ("## Design Findings")
+Per violation: **Rule Violated** (Rule 1-5 or a11y), **File** (path:line), **Issue**, **Fix** (include CLI command).
+
+## Step 6: Gate
+
+- If tests fail: {"ok": false, "reason": "X tests failing: [details]"}
+- If tests pass: {"ok": true}
+
+Test failures block. All other findings are advisory.`,
           timeout: 120
         }]
       }]
