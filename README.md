@@ -13,9 +13,11 @@ A CLI that turns a business problem into a working AI-native project. You descri
 
 ## What AI-native means
 
-Most software puts data in a dashboard and waits for someone to check it. An AI-native product does the opposite: it connects data sources, finds patterns humans would miss, decides what matters, and delivers that intelligence to the right person at the right moment. Not in an interface they visit once a week. In their email, in Slack, on WhatsApp. Triggered by the right conditions.
+Traditional software captured value in two places: access to data and the ability to process it. A company with a better database or a faster report had an edge. AI changes this. Models are available to everyone. Data processing is a commodity. The edge moves downstream.
 
-The value is not in the model. It is not in the database. It is in the delivery: reaching people with actionable intelligence before they ask for it.
+The new value is in what happens after the analysis. Connecting scattered data that no one was combining. Finding patterns that humans miss in the volume. Deciding which patterns actually matter. And delivering that intelligence to the person who can act on it, at the moment they need it. Not in a dashboard they check on Mondays. In their Slack, in their email, on WhatsApp. Triggered by the right conditions.
+
+Most software still stops at the dashboard. An AI-native product goes all the way to delivery.
 
 SuperSkills structures every project around four layers that make this work:
 
