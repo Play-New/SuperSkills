@@ -13,13 +13,13 @@ A CLI that turns a business problem into a working AI-native project. You descri
 
 ## What AI-native means
 
-Traditional software captured value in two places: access to data and the ability to process it. A company with a better database or a faster report had an edge. AI changes this. Models are available to everyone. Data processing is a commodity. The edge moves downstream.
+Wardley's evolution model tracks where each component in a value chain sits, from genesis to commodity. Databases moved through this arc in two decades: custom-built in the 1990s, buyable products by 2010, hosted Postgres at $25/month today. Data processing follows the same path. What cost a team of analysts three weeks now takes a model seconds and a few cents.
 
-The new value is in what happens after the analysis. Connecting scattered data that no one was combining. Finding patterns that humans miss in the volume. Deciding which patterns actually matter. And delivering that intelligence to the person who can act on it, at the moment they need it. Not in a dashboard they check on Mondays. In their Slack, in their email, on WhatsApp. Triggered by the right conditions.
+Sangeet Paul Choudary traces what happens next in *Reshuffle*: when processing becomes a commodity, value moves to delivering intelligence that triggers action. Consider a B2B distributor with 200 employees. Orders sit in Gmail, inventory in the ERP, supplier lead times on a portal. Anyone with an API key can process this data. The distributor's edge is in connecting those three sources, detecting that a key supplier's lead times increased 40% over six weeks, and surfacing that finding to the procurement manager before she places the next order.
 
-Most software still stops at the dashboard. An AI-native product goes all the way to delivery.
+Most software stops at analysis and produces a dashboard. The ops manager checks it Monday morning. The delayed shipment happened Friday. An AI-native product completes the value chain: it connects the data, runs the analysis, decides what matters, and delivers the result to the person who can act, before the window closes.
 
-SuperSkills structures every project around four layers that make this work:
+SuperSkills structures every project around four layers that map this chain:
 
 | Layer | What it does |
 |-------|-------------|
@@ -188,15 +188,15 @@ All skills include tool-specific best practices for Supabase, Vercel, Inngest, a
 
 ## EIID in practice
 
-The four layers from above, with examples.
+Same distributor from above, layer by layer.
 
-**Enrichment.** Your client has customer data in Gmail, orders in an ERP, and supplier info on a portal. Enrichment brings it all together, fills gaps, normalizes formats. Without this layer, the AI has nothing useful to work with.
+**Enrichment.** Orders arrive as email attachments in three formats: PDF, Excel, and plain text. The ERP stores inventory with SKU codes that don't match the supplier portal's product IDs. Enrichment normalizes these into a single schema, fills missing fields from historical data, and links supplier IDs to internal SKUs. Without a clean dataset, every downstream step produces garbage.
 
-**Inference.** The AI finds patterns humans would miss in the volume: orders trending down for a segment, a supplier consistently late, a pricing anomaly across regions. This is the actual intelligence work.
+**Inference.** Six weeks of supplier lead time data show a pattern: one supplier's average delivery went from 5 days to 8. Order volumes in the DACH region dropped 12% month-over-month while Southern Europe grew 7%. A pricing anomaly surfaces where the same SKU costs 15% more through one channel. None of these are visible in any single source.
 
-**Interpretation.** Not every detected pattern matters. A 2% dip might be noise. A 15% dip in the top segment is urgent. Interpretation decides what to surface and how to frame it so the human can act.
+**Interpretation.** The lead time increase matters because that supplier handles 30% of high-margin orders. The DACH drop is seasonal and matches last year's Q1 numbers. The pricing anomaly affects $40K in monthly spend. Interpretation ranks these by business impact: supplier risk first, pricing second, DACH trend flagged but deprioritized.
 
-**Delivery.** The ops manager checks dashboards on Mondays. By then the delayed shipment already happened. Delivery sends a Slack message the moment the delay is predicted. The right insight, to the right person, at the right time.
+**Delivery.** The procurement manager gets a Slack message at 8am Tuesday with the supplier risk analysis and a suggested reallocation. The CFO gets a weekly email summarizing the pricing anomaly with a one-click approval to switch channels. The regional manager gets nothing about DACH because the system determined it was seasonal noise.
 
 ## What Gets Generated
 
@@ -379,11 +379,11 @@ npm run lint          # ESLint
 
 Three ideas shaped the design.
 
-**Value mapping** (Simon Wardley). Wardley Maps show where components sit on the evolution axis, from genesis to commodity. Discovery uses this to assess which parts of a business process are ready for automation and which still need human judgment.
+**Value mapping** (Simon Wardley). Wardley Maps position each component on an evolution axis from genesis to commodity. Discovery uses this to assess which parts of a business process are ready for automation and which still need human judgment. A component at commodity stage (e.g., data storage) gets automated. One at genesis (e.g., a novel scoring model) gets flagged for human oversight.
 
-**Value movement in the AI era** (Sangeet Paul Choudary, *Reshuffle*). Choudary describes how AI shifts value creation from linear pipelines to networked coordination. The valuable output of an AI-native product is not a dashboard. It is intelligence delivered to the right person at the right time. This is why EIID ends with Delivery as a distinct layer.
+**Value movement in the AI era** (Sangeet Paul Choudary, *Reshuffle*). Choudary documents how AI commoditizes processing and pushes value toward orchestration and delivery. When any company can run the same model on the same data, the differentiator becomes what happens after the analysis: which findings reach which person, through which channel, triggered by which conditions. EIID ends with Delivery as a distinct layer because that is where the value concentrates.
 
-**Intelligence where the user is** (Peter Steinberger). Steinberger's work on OpenClaw and CLI-first development argues that intelligence should go to the developer's environment, not pull the developer to a separate interface. SuperSkills generates Claude Code hooks and slash commands, not a web UI. The skills live where you already work.
+**Intelligence where the user is** (Peter Steinberger). Steinberger's work on OpenClaw and CLI-first development shows that tools integrated into existing workflows get adopted, while tools that require context-switching get ignored. SuperSkills generates Claude Code hooks and slash commands that run inside the editor. The developer never leaves the terminal.
 
 ## License
 
