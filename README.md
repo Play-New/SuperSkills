@@ -45,15 +45,16 @@ That is all you need to get started. The rest (Supabase, Vercel, etc.) comes lat
 
 ## Install
 
-```bash
-npm install -g superskills
-```
-
-Or run without installing:
+Not published to npm yet. Install from the repo:
 
 ```bash
-npx superskills
+git clone https://github.com/Play-New/superskills.git
+cd superskills
+npm install && npm run build
+npm link
 ```
+
+After `npm link`, the `superskills` command works globally. To uninstall later: `npm unlink -g superskills`.
 
 ## Quick Start
 
@@ -64,7 +65,7 @@ Two ways to start. Pick the one that fits how you work.
 One command. It asks about your business problem, analyzes it, picks tools, and generates the project.
 
 ```bash
-npx superskills
+superskills
 ```
 
 If you don't have an API key set, it asks for one and tells you where to get it. Everything is guided step by step.
@@ -72,7 +73,7 @@ If you don't have an API key set, it asks for one and tells you where to get it.
 Optional one-time setup (saves your API key so you don't paste it every time):
 
 ```bash
-npx superskills init
+superskills init
 ```
 
 ### Option B: From Claude Code
@@ -82,7 +83,7 @@ No Anthropic API key needed. Claude Code IS Claude — it does the EIID analysis
 One-time setup:
 
 ```bash
-npx superskills init
+superskills init
 ```
 
 This saves your API key and writes instructions to `~/.claude/CLAUDE.md` so Claude Code knows how to use SuperSkills.
@@ -91,7 +92,7 @@ After that, open Claude Code and describe your business problem. Claude Code wil
 
 1. Analyze it through the EIID framework (no API call needed)
 2. Create a `discovery.json` with the analysis
-3. Call `npx superskills scaffold --json --discovery discovery.json --output ./`
+3. Call `superskills scaffold --json --discovery discovery.json --output ./`
 4. Follow the post-scaffold instructions
 
 ### After scaffold
@@ -233,7 +234,7 @@ Fast gates during work, full audit at the end. Zero overhead while building. One
 | Session starts | Detects first run (missing node_modules, .env.local). Suggests init skills. |
 | Before a shell command runs | Fast gate on dangerous commands (credentials, rm -rf, injection). |
 | After a file is written or edited | Fast gate on obvious security issues (hardcoded secrets, injection). |
-| Before stopping | Full audit agent runs four checks: tests, trust deep scan, strategy alignment, design rules. Writes all findings to CLAUDE.md. Blocks if tests fail. |
+| Before stopping | Two agents run. First: test verification (blocks if tests fail). Second: trust deep scan, strategy alignment, design rules. Both write findings to CLAUDE.md. |
 
 **On demand via slash commands:**
 
