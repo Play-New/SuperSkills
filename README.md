@@ -13,11 +13,11 @@ A CLI that turns a business problem into a working AI-native project. You descri
 
 ## What AI-native means
 
-Every component in a value chain evolves from custom-built to commodity. Databases took two decades. Data processing is getting there now: what cost a team of analysts three weeks takes a model seconds and a few cents.
+Every component in a value chain evolves from custom-built to commodity. Databases took two decades. Data processing is getting there now. Building an AI-native product means understanding this movement and acting on three consequences:
 
-When processing becomes a commodity, the edge moves to what happens after the analysis. A B2B distributor has orders in Gmail, inventory in the ERP, supplier lead times on a portal. Anyone can process this data. The edge is in connecting those sources, detecting that a supplier's lead times increased 40% over six weeks, and getting that finding to the procurement manager before she places the next order.
-
-Most software stops at analysis and produces a dashboard. The ops manager checks it Monday. The delayed shipment happened Friday. An AI-native product completes the chain: connect the data, run the analysis, decide what matters, deliver the result before the window closes.
+1. **What to automate.** Components that reached commodity (data storage, text extraction, basic analysis) get automated. No competitive advantage in doing them manually.
+2. **Where to differentiate.** The edge moves to what sits above commodity in the chain: connecting data sources nobody was combining, interpreting patterns in context, delivering findings to the person who can act on them before the window closes.
+3. **What to create.** Commodity processing opens opportunities that didn't exist before. A B2B distributor can now predict supplier delays from lead time trends and reroute orders automatically. That product wasn't viable when the analysis alone cost three analyst-weeks.
 
 SuperSkills structures every project around four layers that map this chain:
 
