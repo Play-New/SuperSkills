@@ -1,6 +1,21 @@
-# SuperSkills
+```
+   ____                       ____  __   _ ____
+  / ___| _   _ _ __   ___ _ _/ ___|| | _(_) | |___
+  \___ \| | | | '_ \ / _ \ '__\___ \| |/ / | | / __|
+   ___) | |_| | |_) |  __/ |  ___) |   <| | | \__ \
+  |____/ \__,_| .__/ \___|_| |____/|_|\_\_|_|_|___/
+              |_|
+```
+
+Business problem in, working project out.
 
 A CLI that turns a business problem into a working AI-native project. You describe the problem. SuperSkills figures out the data sources, the delivery channels, the tool stack, and the project structure. Then it generates everything, including five skills that keep checking your code as you build.
+
+```
+  describe problem ──> discovery ──> tools ──> scaffold ──> working project
+       you              EIID        auto       auto         Next.js + Supabase
+                       analysis    selected   generated     + 5 autonomous skills
+```
 
 ## Prerequisites
 
@@ -94,7 +109,7 @@ Don't need the full pipeline? Each skill works standalone. Pick one and add it t
 
 ```bash
 # Clone the repo (once)
-git clone https://github.com/nicobailon/superskills.git
+git clone https://github.com/Play-New/superskills.git
 
 # Copy the skill you need into your project
 cp -r superskills/standalone-agents/design/.claude/ your-project/.claude/
@@ -309,7 +324,7 @@ Print the full JSON Schema with `superskills discovery --schema`.
 ### Setup
 
 ```bash
-git clone https://github.com/nicobailon/superskills.git
+git clone https://github.com/Play-New/superskills.git
 cd superskills
 npm install
 ```
@@ -317,7 +332,7 @@ npm install
 ### Commands
 
 ```bash
-npm test              # 97 tests across 5 files
+npm test              # 98 tests across 5 files
 npm run type-check    # TypeScript strict mode
 npm run dev           # Run CLI in development mode
 npm run build         # Compile to dist/
@@ -333,14 +348,14 @@ npm run lint          # ESLint
 
 ### Tests
 
-97 tests across five files:
+98 tests across five files:
 
 | File | Count | What It Tests |
 |------|-------|--------------|
 | `analyze.test.ts` | 18 | Claude API mocking, JSON validation, markdown stripping |
 | `catalog.test.ts` | 24 | Channel mapping, tool selection, category handling |
 | `discovery-core.test.ts` | 10 | Validation pipeline, error transformation |
-| `scaffold.test.ts` | 25 | File generation, hooks, agents, skills, design tokens, Playwright |
+| `scaffold.test.ts` | 26 | File generation, hooks, agents, skills, design tokens, Playwright, E2E |
 | `schema.test.ts` | 20 | Zod validation edge cases, defaults, JSON Schema output |
 
 ## Conceptual References

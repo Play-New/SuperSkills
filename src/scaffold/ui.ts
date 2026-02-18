@@ -74,7 +74,14 @@ export async function runScaffold(
     // Display results
     displayResults(result);
 
-    p.outro(pc.green('Scaffold complete!'));
+    console.log('');
+    console.log(pc.green('  +-----------------------------------------+'));
+    console.log(pc.green('  |                                         |'));
+    console.log(pc.green('  |   Project ready. Skills armed.          |'));
+    console.log(pc.green('  |   Open in Claude Code and start.        |'));
+    console.log(pc.green('  |                                         |'));
+    console.log(pc.green('  +-----------------------------------------+'));
+    p.outro(pc.dim('superskills'));
 
     return result;
   } catch (error) {
@@ -150,11 +157,12 @@ function displayResults(result: ScaffoldResult): void {
     result.agentTeam.skills.map(s =>
       pc.dim(`  - ${s.name}: ${s.focus}`)
     ).join('\n') + '\n\n' +
-    pc.bold('Hooks:\n') +
+    pc.bold('Autonomous hooks:\n') +
     pc.dim('  - SessionStart: first-run detection\n') +
-    pc.dim('  - PreToolUse (Bash): trust security check\n') +
-    pc.dim('  - PostToolUse (Write|Edit): trust security scan\n') +
-    pc.dim('  - Stop: testing verification'),
+    pc.dim('  - PreToolUse: fast security gate\n') +
+    pc.dim('  - PostToolUse: fast security gate\n') +
+    pc.dim('  - Stop: full audit (tests + trust + strategy + design)\n') +
+    pc.dim('         writes all findings to CLAUDE.md'),
     'SuperSkills'
   );
 }

@@ -14,13 +14,14 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/catalog/tools-catalog.json dist/catalog/",
     "dev": "tsx src/index.ts",
     "dev:watch": "tsx watch --clear-screen=false --ignore 'dist/**' --ignore 'node_modules/**' src/index.ts",
     "start": "node dist/index.js",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "lint": "eslint src/",
+    "check-sync": "bash scripts/check-sync.sh",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run build"

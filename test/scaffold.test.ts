@@ -145,18 +145,25 @@ describe('scaffold', () => {
     const postToolUse = settings.hooks.PostToolUse[0].hooks[0];
     expect(postToolUse.type).toBe('prompt');
 
-    // Stop uses agent type and runs all four checks
-    const stop = settings.hooks.Stop[0].hooks[0];
-    expect(stop.type).toBe('agent');
-    expect(stop.prompt).toContain('Trust Deep Scan');
-    expect(stop.prompt).toContain('Strategy Alignment');
-    expect(stop.prompt).toContain('EIID');
-    expect(stop.prompt).toContain('Design Audit');
-    expect(stop.prompt).toContain('shadcnblocks');
-    expect(stop.prompt).toContain('Test Report');
-    expect(stop.prompt).toContain('Security Findings');
-    expect(stop.prompt).toContain('Architecture Decisions');
-    expect(stop.prompt).toContain('Design Findings');
+    // Stop has two focused agents
+    const stopHooks = settings.hooks.Stop[0].hooks;
+    expect(stopHooks).toHaveLength(2);
+
+    // Agent 1: testing (gates on test failures)
+    expect(stopHooks[0].type).toBe('agent');
+    expect(stopHooks[0].prompt).toContain('npm test');
+    expect(stopHooks[0].prompt).toContain('Test Report');
+
+    // Agent 2: audit (trust + strategy + design, advisory)
+    expect(stopHooks[1].type).toBe('agent');
+    expect(stopHooks[1].prompt).toContain('Trust Deep Scan');
+    expect(stopHooks[1].prompt).toContain('Strategy Alignment');
+    expect(stopHooks[1].prompt).toContain('EIID');
+    expect(stopHooks[1].prompt).toContain('Design Audit');
+    expect(stopHooks[1].prompt).toContain('shadcnblocks');
+    expect(stopHooks[1].prompt).toContain('Security Findings');
+    expect(stopHooks[1].prompt).toContain('Architecture Decisions');
+    expect(stopHooks[1].prompt).toContain('Design Findings');
   });
 
   it('generates CLAUDE.md with Security Findings and Test Report sections', async () => {
@@ -493,5 +500,71 @@ describe('scaffold', () => {
     );
     expect(playwrightConfig).toContain('defineConfig');
     expect(playwrightConfig).toContain('localhost:3000');
+  });
+
+  it('generates a complete project with all expected files (E2E)', async () => {
+    const tools = await selectTools(mockDiscovery);
+    const result = await scaffold(
+      { discovery: mockDiscovery, tools },
+      { outputDir: testOutputDir }
+    );
+
+    // Core project files
+    const expectedFiles = [
+      'CLAUDE.md',
+      '.env.example',
+      '.gitignore',
+      'package.json',
+      'components.json',
+      'tailwind.config.ts',
+      'playwright.config.ts',
+      'src/app/layout.tsx',
+      'src/app/page.tsx',
+      'src/app/globals.css',
+      'src/lib/utils.ts',
+      'src/lib/supabase.ts',
+      'src/lib/delivery/index.ts',
+      'src/inngest/client.ts',
+      'src/inngest/functions/analyze.ts',
+      'src/app/api/inngest/route.ts',
+      'supabase/config.toml',
+      'tests/e2e/smoke.spec.ts',
+      '.claude/settings.json',
+      '.claude/hooks/first-run-check.sh',
+    ];
+
+    for (const file of expectedFiles) {
+      expect(await fs.pathExists(path.join(result.projectPath, file))).toBe(true);
+    }
+
+    // 5 agents
+    for (const name of ['strategy', 'design', 'trust', 'efficiency', 'testing']) {
+      expect(await fs.pathExists(path.join(result.projectPath, `.claude/agents/${name}.md`))).toBe(true);
+    }
+
+    // 11 skills
+    expect(result.filesCreated.filter(f => f.includes('.claude/skills/')).length).toBe(11);
+
+    // package.json is valid JSON with required fields
+    const pkg = await fs.readJSON(path.join(result.projectPath, 'package.json'));
+    expect(pkg.name).toBe('test-project');
+    expect(pkg.scripts.dev).toBeDefined();
+    expect(pkg.scripts.build).toBeDefined();
+    expect(Object.keys(pkg.dependencies).length).toBeGreaterThan(5);
+
+    // settings.json is valid JSON with all hook types
+    const settings = await fs.readJSON(path.join(result.projectPath, '.claude/settings.json'));
+    expect(Object.keys(settings.hooks)).toEqual(['SessionStart', 'PreToolUse', 'PostToolUse', 'Stop']);
+
+    // CLAUDE.md has all required sections
+    const claudeMd = await fs.readFile(path.join(result.projectPath, 'CLAUDE.md'), 'utf-8');
+    const requiredSections = [
+      '## Context', '## Strategic Analysis', '## AI-Native Architecture (EIID)',
+      '## Tools Stack', '## Architecture Decisions', '## Security Findings',
+      '## Design Findings', '## Test Report', '## SuperSkills', '## Changelog'
+    ];
+    for (const section of requiredSections) {
+      expect(claudeMd).toContain(section);
+    }
   });
 });

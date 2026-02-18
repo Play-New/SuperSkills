@@ -77,7 +77,7 @@ test/
   analyze.test.ts                18 tests (API mocking, validation, markdown stripping)
   catalog.test.ts                24 tests (channel mapping, tool selection, categories)
   discovery-core.test.ts         10 tests (validation pipeline, error handling)
-  scaffold.test.ts               25 tests (file generation, hooks, agents, skills, design tokens)
+  scaffold.test.ts               26 tests (file generation, hooks, agents, skills, design tokens, E2E)
   schema.test.ts                 20 tests (Zod validation edge cases)
   fixtures/mock-discovery.json   Test fixture
 tools-catalog.json               GDPR-verified tools with categories and EIID mapping
@@ -162,7 +162,7 @@ Playwright has two roles: testing (primary) and browser-based scraping (secondar
 
 ```bash
 npm install              # install dependencies
-npm test                 # 97 tests across 5 files
+npm test                 # 98 tests across 5 files
 npm run type-check       # TypeScript strict mode
 npm run dev              # run CLI in dev mode (tsx)
 npm run build            # compile to dist/

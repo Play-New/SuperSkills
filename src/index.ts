@@ -49,8 +49,13 @@ const VERSION = '0.1.0';
 
 function displayBanner(): void {
   console.log('');
-  console.log(pc.bold('  SuperSkills'));
-  console.log(pc.dim('  AI-native product development'));
+  console.log(pc.cyan('   ____                       ____  __   _ ____     '));
+  console.log(pc.cyan('  / ___| _   _ _ __   ___ _ _/ ___|| | _(_) | |___ '));
+  console.log(pc.cyan('  \\___ \\| | | | \'_ \\ / _ \\ \'__\\___ \\| |/ / | | / __|'));
+  console.log(pc.cyan('   ___) | |_| | |_) |  __/ |  ___) |   <| | | \\__ \\'));
+  console.log(pc.cyan('  |____/ \\__,_| .__/ \\___|_| |____/|_|\\_\\_|_|_|___/'));
+  console.log(pc.cyan('              |_|                                   '));
+  console.log(pc.dim(`  v${VERSION} — business problem in, working project out`));
   console.log('');
 }
 

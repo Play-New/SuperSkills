@@ -7,7 +7,7 @@ import type { Tool, ToolsCatalog, ToolSuggestion, SelectionResult } from './type
 export type { Tool, ToolsCatalog, ToolSuggestion, SelectionResult } from './types.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const CATALOG_PATH = path.resolve(__dirname, '../../tools-catalog.json');
+const CATALOG_PATH = path.resolve(__dirname, 'tools-catalog.json');
 
 let catalogCache: ToolsCatalog | null = null;
 

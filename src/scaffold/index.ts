@@ -182,15 +182,26 @@ function createAgentTeamConfig(discovery: DiscoveryResult, tools?: SelectionResu
         }]
       }],
       stop: [{
-        hooks: [{
-          type: 'agent',
-          prompt: `Pre-stop audit for [projectName]. Four checks, one report.
-
-## Step 1: Run Tests
+        hooks: [
+          {
+            type: 'agent',
+            prompt: `Test verification for [projectName].
 
 Run \`npm test\`. If Playwright tests exist in tests/e2e/, run \`npx playwright test\` too.
 
-## Step 2: Trust Deep Scan
+Read CLAUDE.md, then append results to the "## Test Report" section using the Edit tool:
+
+**Date:** [date] | **Passed:** [count] | **Failed:** [count] | **Skipped:** [count]
+[failure details if any]
+
+Gate: if tests fail, respond {"ok": false, "reason": "X tests failing: [details]"}. If tests pass, respond {"ok": true}.`,
+            timeout: 60
+          },
+          {
+            type: 'agent',
+            prompt: `Pre-stop audit for [projectName]. Three checks: trust, strategy, design.
+
+## Trust Deep Scan
 
 Scan all files changed in this session for:
 1. Hardcoded API keys, passwords, tokens, secrets
@@ -201,7 +212,7 @@ Scan all files changed in this session for:
 6. Missing RLS policies on Supabase tables
 7. Secrets in environment config committed to git
 
-## Step 3: Strategy Alignment Check
+## Strategy Alignment Check
 
 Read CLAUDE.md to understand the EIID mapping and project goals.
 Check recent changes against the EIID framework:
@@ -209,7 +220,7 @@ Check recent changes against the EIID framework:
 - Any scope creep?
 - Any new opportunities across the four layers?
 
-## Step 4: Design Audit
+## Design Audit
 
 Scan all .tsx files for violations of these five rules:
 1. **shadcnblocks FIRST** — If a shadcnblocks block exists for a UI section, use it. Install: \`npx shadcn add @shadcnblocks/[name]\`.
@@ -219,13 +230,9 @@ Scan all .tsx files for violations of these five rules:
 5. **Zero inline arbitrary values** — No text-[#FF5733], no p-[13px]. Tailwind scale values and theme classes only.
 Also check: color contrast >= 4.5:1, focus states, alt text, form labels.
 
-## Step 5: Report to CLAUDE.md
+## Report to CLAUDE.md
 
-Read CLAUDE.md, then append all findings using the Edit tool.
-
-### Test Report section ("## Test Report")
-**Date:** [date] | **Passed:** [count] | **Failed:** [count] | **Skipped:** [count]
-[failure details if any]
+Read CLAUDE.md, then append all findings using the Edit tool:
 
 ### Security Findings section ("## Security Findings")
 Per issue: **Severity** (BLOCK|HIGH|MEDIUM|LOW), **File** (path:line), **Issue**, **Fix**.
@@ -236,14 +243,10 @@ Per finding: **Type** (alignment-check|opportunity|drift-warning), **Layer** (en
 ### Design Findings section ("## Design Findings")
 Per violation: **Rule Violated** (Rule 1-5 or a11y), **File** (path:line), **Issue**, **Fix** (include CLI command).
 
-## Step 6: Gate
-
-- If tests fail: {"ok": false, "reason": "X tests failing: [details]"}
-- If tests pass: {"ok": true}
-
-Test failures block. All other findings are advisory.`,
-          timeout: 120
-        }]
+Advisory only. Respond {"ok": true} when done.`,
+            timeout: 60
+          }
+        ]
       }]
     }
   };

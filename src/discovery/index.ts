@@ -52,6 +52,12 @@ export async function runDiscovery(): Promise<DiscoveryResult | null> {
   if (!result) return null;
 
   displayResult(result);
+
+  // Save discovery.json to disk
+  const outputPath = path.resolve('discovery.json');
+  await fs.writeFile(outputPath, JSON.stringify(result, null, 2));
+  p.log.info(`Saved to ${pc.cyan(outputPath)}`);
+
   p.outro(pc.green('Discovery complete.'));
 
   return result;
@@ -184,43 +190,15 @@ async function collectContext(): Promise<Context | null> {
 
   const businessDescription = await p.text({
     message: forWhom === 'me' ? 'What do you do?' : 'What does the company do?',
-    placeholder: 'e.g., "Distribute industrial hardware to SMBs in Lombardy"',
-    validate: (v) => (!v || v.length < 10) ? 'Describe the business' : undefined
+    placeholder: 'e.g., "B2B hardware distribution, 200 employees, Lombardy"',
+    validate: (v) => (!v || v.length < 10) ? 'Describe the business (include industry and size if relevant)' : undefined
   });
   if (p.isCancel(businessDescription)) return null;
-
-  const industry = await p.text({
-    message: 'Industry/sector?',
-    placeholder: 'e.g., B2B distribution, SaaS, manufacturing'
-  });
-  if (p.isCancel(industry)) return null;
-
-  const employees = await p.text({
-    message: 'How many employees?',
-    placeholder: 'e.g., 5, 50, 500'
-  });
-  if (p.isCancel(employees)) return null;
-
-  const revenue = await p.text({
-    message: 'Annual revenue or stage?',
-    placeholder: 'e.g., €2M, pre-seed, Series A'
-  });
-  if (p.isCancel(revenue)) return null;
-
-  const yearsInBusiness = await p.text({
-    message: 'How long in business?',
-    placeholder: 'e.g., 2 years, 15 years, just started'
-  });
-  if (p.isCancel(yearsInBusiness)) return null;
 
   return {
     forWhom: forWhom as 'me' | 'my_company' | 'client',
     companyName: companyName || undefined,
-    businessDescription: businessDescription as string,
-    industry: (industry as string) || undefined,
-    employees: (employees as string) || undefined,
-    revenue: (revenue as string) || undefined,
-    yearsInBusiness: (yearsInBusiness as string) || undefined
+    businessDescription: businessDescription as string
   };
 }
 

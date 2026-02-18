@@ -1,1 +1,0 @@
-{"version":3,"file":"skill-agents.d.ts","sourceRoot":"","sources":["../../../src/scaffold/templates/skill-agents.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,0BAA0B,CAAC;AAChE,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,wBAAwB,CAAC;AAiE9D,wBAAgB,mBAAmB,CACjC,SAAS,EAAE,eAAe,EAC1B,KAAK,CAAC,EAAE,eAAe,GACtB,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAkBxB"}
