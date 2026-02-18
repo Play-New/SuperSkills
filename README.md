@@ -11,6 +11,23 @@ Business problem in, working project out.
 
 A CLI that turns a business problem into a working AI-native project. You describe the problem. SuperSkills figures out the data sources, the delivery channels, the tool stack, and the project structure. Then it generates everything, including five skills that keep checking your code as you build.
 
+## What AI-native means
+
+Most software puts data in a dashboard and waits for someone to check it. An AI-native product does the opposite: it connects data sources, finds patterns humans would miss, decides what matters, and delivers that intelligence to the right person at the right moment. Not in an interface they visit once a week. In their email, in Slack, on WhatsApp. Triggered by the right conditions.
+
+The value is not in the model. It is not in the database. It is in the delivery: reaching people with actionable intelligence before they ask for it.
+
+SuperSkills structures every project around four layers that make this work:
+
+| Layer | What it does |
+|-------|-------------|
+| **E**nrichment | Connect and normalize data from scattered sources (Gmail, ERP, APIs, portals) |
+| **I**nference | Detect patterns, predict outcomes, flag anomalies |
+| **I**nterpretation | Decide what matters and how to frame it for the human |
+| **D**elivery | Push insights where people are, triggered by the right conditions |
+
+This is **EIID**. Discovery maps your business problem to these four layers. Every skill checks your code against this mapping.
+
 ```
   describe problem ──> discovery ──> tools ──> scaffold ──> working project
        you              EIID        auto       auto         Next.js + Supabase
@@ -167,19 +184,17 @@ cd plugins && zip -r strategy.zip strategy/ && cd ..
 
 All skills include tool-specific best practices for Supabase, Vercel, Inngest, and Next.js.
 
-## What is EIID
+## EIID in practice
 
-Every AI-native product works on four layers.
+The four layers from above, with examples.
 
-**Enrichment.** Connect data sources. Fill gaps. Normalize formats. If your client has customer data in Gmail, an ERP, and a supplier portal, enrichment brings it all together.
+**Enrichment.** Your client has customer data in Gmail, orders in an ERP, and supplier info on a portal. Enrichment brings it all together, fills gaps, normalizes formats. Without this layer, the AI has nothing useful to work with.
 
-**Inference.** Detect patterns. Predict outcomes. Flag anomalies. This is where the AI does its actual work: finding things humans would miss in the volume of data.
+**Inference.** The AI finds patterns humans would miss in the volume: orders trending down for a segment, a supplier consistently late, a pricing anomaly across regions. This is the actual intelligence work.
 
-**Interpretation.** Turn raw inference output into actionable insights. Not every detected pattern matters. Interpretation decides what is worth surfacing and how to frame it.
+**Interpretation.** Not every detected pattern matters. A 2% dip might be noise. A 15% dip in the top segment is urgent. Interpretation decides what to surface and how to frame it so the human can act.
 
-**Delivery.** Push insights where people actually are. Not in a dashboard they check once a week. In their email. In Slack. On WhatsApp. At the right moment, triggered by the right conditions.
-
-The discovery command maps your business problem to these four layers. Every skill references this mapping when checking your code.
+**Delivery.** The ops manager checks dashboards on Mondays. By then the delayed shipment already happened. Delivery sends a Slack message the moment the delay is predicted. The right insight, to the right person, at the right time.
 
 ## What Gets Generated
 
