@@ -148,7 +148,7 @@ describe('scaffold', () => {
     }
   });
 
-  it('generates 10 skill directories in .claude/skills/', async () => {
+  it('generates 11 skill directories in .claude/skills/', async () => {
     const tools = await selectTools(mockDiscovery);
     const result = await scaffold(
       { discovery: mockDiscovery, tools },
@@ -156,7 +156,7 @@ describe('scaffold', () => {
     );
 
     const skillNames = [
-      'strategy-init', 'design-init', 'trust-init', 'efficiency-init', 'testing-init',
+      'strategy-start', 'strategy-init', 'design-init', 'trust-init', 'efficiency-init', 'testing-init',
       'strategy-review', 'design-review', 'trust-audit', 'efficiency-review', 'testing-verify'
     ];
 

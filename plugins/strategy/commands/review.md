@@ -3,7 +3,7 @@ description: Alignment check + opportunity scan
 argument-hint: "[optional: recent changes to review]"
 ---
 
-# /strategy-review
+# /strategy:review
 
 Full strategic review and opportunity scan.
 

@@ -3,7 +3,7 @@ description: Define project goals and strategic priorities
 argument-hint: "[optional: project description]"
 ---
 
-# /strategy-init
+# /strategy:init
 
 Define the project's strategic context and priorities.
 

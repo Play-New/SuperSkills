@@ -3,7 +3,7 @@ description: Bundle size, Core Web Vitals, N+1 queries, cost report
 argument-hint: "[optional: specific areas to audit]"
 ---
 
-# /efficiency-review
+# /efficiency:review
 
 Comprehensive efficiency audit.
 

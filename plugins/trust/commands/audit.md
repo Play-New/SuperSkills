@@ -3,7 +3,7 @@ description: Full OWASP Top 10 + GDPR security audit
 argument-hint: "[optional: specific files or areas to audit]"
 ---
 
-# /trust-audit
+# /trust:audit
 
 Comprehensive security and compliance audit.
 

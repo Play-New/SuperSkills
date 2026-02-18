@@ -49,7 +49,8 @@ export async function runToolSelection(discoveryResult: DiscoveryResult): Promis
   suggestions.all = [
     ...suggestions.core,
     ...suggestions.delivery,
-    ...suggestions.enrichment
+    ...suggestions.enrichment,
+    ...suggestions.testing
   ];
 
   // Display summary

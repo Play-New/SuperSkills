@@ -65,12 +65,12 @@ src/
       package-json.ts            package.json with pinned versions
       project-files.ts           Next.js, Inngest, Supabase, Playwright
       skill-agents.ts            Five .claude/agents/*.md subagent files
-      skill-commands.ts          Ten .claude/skills/*/SKILL.md slash commands
+      skill-commands.ts          Eleven .claude/skills/*/SKILL.md slash commands
       teammate-prompts.ts        Prompts for all five skills
 standalone-agents/               Standalone skills for Claude Code (no scaffold needed)
   design/  trust/  testing/  efficiency/  strategy/
   (each has .claude/agents/ + .claude/skills/)
-plugins/                         Cowork plugins for Claude Desktop
+plugins/                         Claude Code / Cowork plugins (namespaced commands)
   design/  trust/  testing/  efficiency/  strategy/
   (each has .claude-plugin/plugin.json + commands/ + skills/)
 test/
@@ -113,8 +113,9 @@ PostToolUse(Write|Edit) trust scans file changes after writing
 Stop                    testing runs full suite, blocks if tests fail
 ```
 
-Ten slash commands (five init, five review):
+Eleven slash commands:
 
+- `/strategy-start` (entry point: defines project, maps EIID, writes CLAUDE.md)
 - `/strategy-init`, `/design-init`, `/trust-init`, `/efficiency-init`, `/testing-init`
 - `/strategy-review`, `/design-review`, `/trust-audit`, `/efficiency-review`, `/testing-verify`
 

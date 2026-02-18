@@ -3,7 +3,7 @@ description: Set up security foundations (auth, RLS, CORS, headers)
 argument-hint: "[optional: auth method, data sensitivity level]"
 ---
 
-# /trust-init
+# /trust:init
 
 Set up security foundations for this project.
 

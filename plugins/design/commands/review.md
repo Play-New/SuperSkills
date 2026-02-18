@@ -3,7 +3,7 @@ description: Audit UI against hard rules, accessibility, and responsive design
 argument-hint: "[optional: specific files or components to review]"
 ---
 
-# /design-review
+# /design:review
 
 Audit the UI against the five hard rules, accessibility, and responsive design.
 

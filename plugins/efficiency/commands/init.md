@@ -3,7 +3,7 @@ description: Set performance budgets and monitoring
 argument-hint: "[optional: LCP target, bundle limit]"
 ---
 
-# /efficiency-init
+# /efficiency:init
 
 Set up performance monitoring and budgets.
 

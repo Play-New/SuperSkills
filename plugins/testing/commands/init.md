@@ -3,7 +3,7 @@ description: Set up vitest + Playwright testing infrastructure
 argument-hint: "[optional: critical user flows to test]"
 ---
 
-# /testing-init
+# /testing:init
 
 Set up the testing infrastructure.
 

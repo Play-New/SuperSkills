@@ -8,6 +8,55 @@ interface SkillSpec {
 
 const INIT_SKILLS: SkillSpec[] = [
   {
+    name: 'strategy-start',
+    description: 'Define a project from scratch. Maps business problem to EIID framework, writes CLAUDE.md.',
+    content: () => `# /strategy-start
+
+Start a new project or redefine the strategic foundation for this one.
+
+No API key needed. Claude Code does the analysis directly.
+
+## Before Starting
+
+1. Read the codebase: CLAUDE.md, package.json, README.md, source files, .env.example
+2. If CLAUDE.md already has an EIID mapping, suggest \`/strategy-init\` instead
+3. Use existing files as context. Do not ask what the code already tells you.
+
+## Conversation
+
+Ask about what you do not know. Skip what you can infer. Four things needed:
+
+1. **The problem.** What costs time, money, or attention today?
+2. **The data.** What systems, APIs, files, data sources exist?
+3. **The people.** Who needs the output? Where are they? (email, Slack, WhatsApp, Telegram)
+4. **The outcome.** What does success look like?
+
+One round of questions. Two at most.
+
+## EIID Mapping
+
+Build the four-layer mapping:
+
+- **Enrichment**: existing data, missing data, sources to connect
+- **Inference**: patterns to detect, predictions, anomalies to flag
+- **Interpretation**: actionable insights to surface
+- **Delivery**: channels, triggers, timing
+
+## Output
+
+Update CLAUDE.md with: Context, Problem, Desired Outcome, EIID mapping, Architecture Decisions section.
+
+Then suggest: \`/strategy-init\` to validate and prioritize, plus which other skills to activate.
+
+## Rules
+
+- One conversation, then write. Do not iterate endlessly.
+- Concrete items, not vague categories. "Gmail inbox" not "email data".
+- CLAUDE.md is the deliverable.
+- Do not suggest tools or tech stack.
+`
+  },
+  {
     name: 'strategy-init',
     description: 'Validate EIID mapping, set priorities, write first decision to CLAUDE.md',
     content: (discovery) => `# /strategy-init

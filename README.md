@@ -76,6 +76,7 @@ npm run dev
 Then open the project in Claude Code and run the init skills:
 
 ```
+/strategy-start     Defines the project, maps EIID, writes CLAUDE.md (if not done yet)
 /strategy-init      Validates the EIID mapping, sets priorities
 /design-init        Asks for brand, configures shadcnblocks + shadcn + tokens
 /trust-init         Sets up auth, RLS policies, CORS
@@ -113,25 +114,41 @@ Open the project in Claude Code. The slash commands work immediately:
 /design-review    Audit UI, a11y, responsive
 ```
 
-### For Cowork (Claude Desktop)
+Each skill folder has a README.md with installation and usage instructions.
 
-Each skill is also a Cowork plugin. Copy the plugin folder:
+### As Claude Code Plugins
+
+Each skill is also a Claude Code plugin. Plugins use namespaced commands (`/strategy:start` instead of `/strategy-start`).
+
+**Local testing** (load without installing):
 
 ```bash
-cp -r superskills/plugins/design ~/.claude/plugins/design
+claude --plugin-dir superskills/plugins/strategy
 ```
 
-Or browse the `plugins/` folder in this repo and install from the Cowork plugin manager.
+**From a marketplace** (after SuperSkills is published):
+
+```
+/plugin install strategy@superskills
+```
+
+**Cowork** (Claude's desktop knowledge work mode): zip the plugin folder and upload it from the Cowork Plugins tab (click "+", drag the zip, "Upload"). Or install from the marketplace at [claude.com/plugins](https://claude.com/plugins).
+
+```bash
+# Example: create a zip for the strategy plugin
+cd plugins && zip -r strategy.zip strategy/ && cd ..
+# Then drag strategy.zip into Cowork's Plugins tab
+```
 
 ### Available Skills
 
-| Skill | What It Does | Commands |
-|-------|-------------|----------|
-| **design** | shadcnblocks/shadcn, design tokens, WCAG 2.1 AA, responsive | `/design-init`, `/design-review` |
-| **trust** | OWASP Top 10, GDPR, secrets, auth, Supabase RLS | `/trust-init`, `/trust-audit` |
-| **testing** | vitest + Playwright setup, test verification | `/testing-init`, `/testing-verify` |
-| **efficiency** | Bundle size, Core Web Vitals, N+1 queries, API costs | `/efficiency-init`, `/efficiency-review` |
-| **strategy** | Goal alignment, scope creep detection, opportunity scan | `/strategy-init`, `/strategy-review` |
+| Skill | What It Does | Standalone Commands | Plugin Commands |
+|-------|-------------|-------------------|----------------|
+| **strategy** | Project definition, alignment, opportunity scan | `/strategy-start`, `-init`, `-review` | `/strategy:start`, `:init`, `:review` |
+| **design** | shadcnblocks/shadcn, design tokens, WCAG 2.1 AA | `/design-init`, `-review` | `/design:init`, `:review` |
+| **trust** | OWASP Top 10, GDPR, secrets, auth, RLS | `/trust-init`, `-audit` | `/trust:init`, `:audit` |
+| **testing** | vitest + Playwright, test verification | `/testing-init`, `-verify` | `/testing:init`, `:verify` |
+| **efficiency** | Bundle size, CWV, N+1 queries, API costs | `/efficiency-init`, `-review` | `/efficiency:init`, `:review` |
 
 All skills include tool-specific best practices for Supabase, Vercel, Inngest, and Next.js.
 
@@ -155,7 +172,7 @@ Given a business problem, scaffold produces a Next.js project with:
 
 - **CLAUDE.md** containing the strategic brief and EIID mapping
 - **Five subagents** in `.claude/agents/` that run specialized checks
-- **Ten slash commands** in `.claude/skills/` (five for initial setup, five for ongoing review)
+- **Eleven slash commands** in `.claude/skills/` (one entry point, five for initial setup, five for ongoing review)
 - **Claude Code hooks** in `.claude/settings.json` that trigger security and test checks automatically
 - **A first-run script** that detects when the project is opened for the first time and suggests what to do
 - **Next.js + Supabase + Inngest** application structure with delivery integrations
@@ -187,6 +204,7 @@ Skills are checklists with teeth. They check code against specific criteria, rep
 **On demand via slash commands:**
 
 ```
+/strategy-start     Define project, map EIID, write CLAUDE.md (entry point)
 /strategy-review    EIID alignment + proactive opportunity scan
 /design-review      Audit shadcnblocks/shadcn usage, hard rules, a11y, tokens
 /trust-audit        OWASP Top 10 + GDPR checklist

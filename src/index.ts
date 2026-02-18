@@ -584,7 +584,7 @@ Every AI-native product works on four layers:
       "triggers": ["..."]
     }
   },
-  "createdAt": "2024-01-01T00:00:00.000Z"
+  "createdAt": "use current ISO 8601 date"
 }
 \`\`\`
 

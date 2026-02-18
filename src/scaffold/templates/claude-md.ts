@@ -174,6 +174,12 @@ function generateSkillsSection(): string {
 
 Five skills amplify this project. Skills are competencies, not agents.
 
+### Entry Point
+
+| Skill | Purpose |
+|-------|---------|
+| \`/strategy-start\` | Define project from scratch, map EIID, write CLAUDE.md |
+
 ### Init Skills (run once after scaffold)
 
 | Skill | Purpose |

@@ -3,7 +3,7 @@ description: Run full test suite and report results
 argument-hint: "[optional: specific test files or patterns]"
 ---
 
-# /testing-verify
+# /testing:verify
 
 Run the complete test suite and report results.
 

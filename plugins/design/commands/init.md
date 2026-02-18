@@ -3,7 +3,7 @@ description: Set up design system with shadcnblocks, shadcn, and design tokens
 argument-hint: "[optional: brand colors, font preferences]"
 ---
 
-# /design-init
+# /design:init
 
 Set up the design system for this project. Uses shadcnblocks (1351 blocks, most are free) and shadcn base components.
 
