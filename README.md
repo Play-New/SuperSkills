@@ -1,0 +1,338 @@
+# SuperSkills
+
+A CLI that turns a business problem into a working AI-native project. You describe the problem. SuperSkills figures out the data sources, the delivery channels, the tool stack, and the project structure. Then it generates everything, including five skills that keep checking your code as you build.
+
+## Prerequisites
+
+- **Node.js 20 or later.** Check with `node --version`. If you need to install or update: [nodejs.org](https://nodejs.org)
+- **An Anthropic API key** (only for CLI mode). Get one at [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys). Free tier available. Not needed if you use SuperSkills from Claude Code.
+
+That is all you need to get started. The rest (Supabase, Vercel, etc.) comes later when you set up the generated project.
+
+## Install
+
+```bash
+npm install -g superskills
+```
+
+Or run without installing:
+
+```bash
+npx superskills
+```
+
+## Quick Start
+
+Two ways to start. Pick the one that fits how you work.
+
+### Option A: From the terminal
+
+One command. It asks about your business problem, analyzes it, picks tools, and generates the project.
+
+```bash
+npx superskills
+```
+
+If you don't have an API key set, it asks for one and tells you where to get it. Everything is guided step by step.
+
+Optional one-time setup (saves your API key so you don't paste it every time):
+
+```bash
+npx superskills init
+```
+
+### Option B: From Claude Code
+
+No Anthropic API key needed. Claude Code IS Claude — it does the EIID analysis itself. SuperSkills only handles scaffolding.
+
+One-time setup:
+
+```bash
+npx superskills init
+```
+
+This saves your API key and writes instructions to `~/.claude/CLAUDE.md` so Claude Code knows how to use SuperSkills.
+
+After that, open Claude Code and describe your business problem. Claude Code will:
+
+1. Analyze it through the EIID framework (no API call needed)
+2. Create a `discovery.json` with the analysis
+3. Call `npx superskills scaffold --json --discovery discovery.json --output ./`
+4. Follow the post-scaffold instructions
+
+### After scaffold
+
+Both paths produce the same project. Scaffold prints exact next steps:
+
+```bash
+cd your-project
+npm install
+cp .env.example .env.local
+# Fill in the keys (scaffold tells you where to get each one)
+npx supabase start     # needs Docker
+npm run dev
+```
+
+Then open the project in Claude Code and run the init skills:
+
+```
+/strategy-init      Validates the EIID mapping, sets priorities
+/design-init        Asks for brand, configures shadcnblocks + shadcn + tokens
+/trust-init         Sets up auth, RLS policies, CORS
+/efficiency-init    Sets performance budgets
+/testing-init       Configures vitest + Playwright, writes first smoke test
+```
+
+These run once. After that, hooks handle ongoing checks automatically.
+
+## Use a Single Skill (no scaffold needed)
+
+Don't need the full pipeline? Each skill works standalone. Pick one and add it to any existing project. No API key, no discovery, no scaffold.
+
+### For Claude Code
+
+```bash
+# Clone the repo (once)
+git clone https://github.com/nicobailon/superskills.git
+
+# Copy the skill you need into your project
+cp -r superskills/standalone-agents/design/.claude/ your-project/.claude/
+```
+
+You can copy multiple skills — the `.claude/` folders merge:
+
+```bash
+cp -r superskills/standalone-agents/design/.claude/ your-project/.claude/
+cp -r superskills/standalone-agents/trust/.claude/ your-project/.claude/
+```
+
+Open the project in Claude Code. The slash commands work immediately:
+
+```
+/design-init      Set up shadcn + shadcnblocks + design tokens
+/design-review    Audit UI, a11y, responsive
+```
+
+### For Cowork (Claude Desktop)
+
+Each skill is also a Cowork plugin. Copy the plugin folder:
+
+```bash
+cp -r superskills/plugins/design ~/.claude/plugins/design
+```
+
+Or browse the `plugins/` folder in this repo and install from the Cowork plugin manager.
+
+### Available Skills
+
+| Skill | What It Does | Commands |
+|-------|-------------|----------|
+| **design** | shadcnblocks/shadcn, design tokens, WCAG 2.1 AA, responsive | `/design-init`, `/design-review` |
+| **trust** | OWASP Top 10, GDPR, secrets, auth, Supabase RLS | `/trust-init`, `/trust-audit` |
+| **testing** | vitest + Playwright setup, test verification | `/testing-init`, `/testing-verify` |
+| **efficiency** | Bundle size, Core Web Vitals, N+1 queries, API costs | `/efficiency-init`, `/efficiency-review` |
+| **strategy** | Goal alignment, scope creep detection, opportunity scan | `/strategy-init`, `/strategy-review` |
+
+All skills include tool-specific best practices for Supabase, Vercel, Inngest, and Next.js.
+
+## What is EIID
+
+Every AI-native product works on four layers.
+
+**Enrichment.** Connect data sources. Fill gaps. Normalize formats. If your client has customer data in Gmail, an ERP, and a supplier portal, enrichment brings it all together.
+
+**Inference.** Detect patterns. Predict outcomes. Flag anomalies. This is where the AI does its actual work: finding things humans would miss in the volume of data.
+
+**Interpretation.** Turn raw inference output into actionable insights. Not every detected pattern matters. Interpretation decides what is worth surfacing and how to frame it.
+
+**Delivery.** Push insights where people actually are. Not in a dashboard they check once a week. In their email. In Slack. On WhatsApp. At the right moment, triggered by the right conditions.
+
+The discovery command maps your business problem to these four layers. Every skill references this mapping when checking your code.
+
+## What Gets Generated
+
+Given a business problem, scaffold produces a Next.js project with:
+
+- **CLAUDE.md** containing the strategic brief and EIID mapping
+- **Five subagents** in `.claude/agents/` that run specialized checks
+- **Ten slash commands** in `.claude/skills/` (five for initial setup, five for ongoing review)
+- **Claude Code hooks** in `.claude/settings.json` that trigger security and test checks automatically
+- **A first-run script** that detects when the project is opened for the first time and suggests what to do
+- **Next.js + Supabase + Inngest** application structure with delivery integrations
+- **Playwright and vitest** configured for E2E and unit testing
+
+## The Five Skills
+
+Skills are checklists with teeth. They check code against specific criteria, report findings to CLAUDE.md, and in two cases can block.
+
+| Skill | What It Checks | Blocks? |
+|-------|---------------|---------|
+| **strategy** | EIID alignment, scope creep, proactive opportunity suggestions | No |
+| **design** | shadcnblocks/shadcn usage, WCAG 2.1 AA, design tokens, responsive | No |
+| **trust** | OWASP Top 10, GDPR, hardcoded secrets, injection, auth bypass | Yes |
+| **efficiency** | Bundle size, Core Web Vitals, N+1 queries, API costs | No |
+| **testing** | Test pass/fail, coverage gaps, critical flow verification | Yes (blocks stop) |
+
+### How They Run
+
+**Automatically via hooks** (configured in `.claude/settings.json`):
+
+| When | What Happens |
+|------|-------------|
+| Session starts | Detects first run (missing node_modules, .env.local). Suggests init skills. |
+| Before a shell command runs | Trust checks for secrets, destructive operations, injection. |
+| After a file is written or edited | Trust scans for hardcoded keys, XSS, PII exposure. |
+| Before stopping | Testing runs the full suite. Blocks if anything fails. |
+
+**On demand via slash commands:**
+
+```
+/strategy-review    EIID alignment + proactive opportunity scan
+/design-review      Audit shadcnblocks/shadcn usage, hard rules, a11y, tokens
+/trust-audit        OWASP Top 10 + GDPR checklist
+/efficiency-review  Bundle size, CWV, N+1 queries, cost report
+/testing-verify     Run full test suite, report failures
+```
+
+## Tool Stack
+
+SuperSkills picks tools based on the delivery channels and data sources in your EIID mapping. All tools are GDPR-verified.
+
+### Core (always included)
+
+| Tool | What It Does |
+|------|-------------|
+| **Supabase** | Database, auth, storage, pgvector for embeddings |
+| **Vercel** | Hosting, edge functions |
+| **Inngest** | Durable workflows, cron jobs, retry logic |
+| **Claude** | LLM for analysis and inference |
+| **OpenAI** | Embeddings |
+
+### Delivery (based on channels)
+
+| Tool | When Selected |
+|------|--------------|
+| **Brevo** | Email, SMS, or WhatsApp delivery |
+| **Telegram** | Telegram delivery |
+| **Slack** | Slack delivery |
+| **Discord** | Discord delivery |
+| **Baileys** | WhatsApp in development (unofficial, ban risk) |
+
+### Enrichment (based on data sources)
+
+| Tool | When Selected |
+|------|--------------|
+| **Apify** | Web scraping at scale (proxy management, rate limiting) |
+| **Supermemory** | Knowledge base connectors (Google Drive, Notion, OneDrive) |
+| **Playwright** | Browser-based scraping for dev and sites you control |
+
+### Testing (always included)
+
+| Tool | What It Does |
+|------|-------------|
+| **Playwright** | E2E browser tests, accessibility audits, visual regression |
+
+Playwright has two roles: testing (primary) and browser-based scraping (secondary). For production scraping at scale, Apify handles proxy rotation and cloud execution.
+
+If you want to review or change the auto-selected tools before scaffolding:
+
+```bash
+superskills tools
+```
+
+Print the full catalog:
+
+```bash
+superskills tools --catalog
+```
+
+## Pipeline Mode
+
+For automation and CI, pass JSON files instead of answering prompts:
+
+```bash
+superskills discovery --json --input brief.json --output discovery.json
+superskills scaffold --json --discovery discovery.json --output ./my-project
+```
+
+If you need to override tools in pipeline mode:
+
+```bash
+superskills tools --json --input discovery.json --output tools.json
+superskills scaffold --json --discovery discovery.json --tools tools.json --output ./my-project
+```
+
+### Input Format
+
+The discovery command accepts a JSON brief:
+
+```json
+{
+  "projectName": "order-automation",
+  "context": {
+    "forWhom": "client",
+    "companyName": "Acme Corp",
+    "businessDescription": "B2B hardware distribution, 200 employees",
+    "industry": "manufacturing"
+  },
+  "problem": "4 hours per day spent on manual order processing from email to ERP",
+  "desiredOutcome": "Automated order intake with anomaly detection",
+  "currentProcess": ["Check email for orders", "Copy data to Excel", "Enter into ERP"],
+  "availableData": ["Gmail", "ERP API", "Supplier portal"]
+}
+```
+
+Print the full JSON Schema with `superskills discovery --schema`.
+
+## Development
+
+### Setup
+
+```bash
+git clone https://github.com/nicobailon/superskills.git
+cd superskills
+npm install
+```
+
+### Commands
+
+```bash
+npm test              # 95 tests across 5 files
+npm run type-check    # TypeScript strict mode
+npm run dev           # Run CLI in development mode
+npm run build         # Compile to dist/
+npm run lint          # ESLint
+```
+
+### Environment
+
+| Variable | Required | Default |
+|----------|----------|---------|
+| `ANTHROPIC_API_KEY` | Yes (for discovery) | Asked interactively if missing |
+| `SUPERSKILLS_MODEL` | No | `claude-opus-4-6` |
+
+### Tests
+
+95 tests across five files:
+
+| File | Count | What It Tests |
+|------|-------|--------------|
+| `analyze.test.ts` | 18 | Claude API mocking, JSON validation, markdown stripping |
+| `catalog.test.ts` | 24 | Channel mapping, tool selection, category handling |
+| `discovery-core.test.ts` | 10 | Validation pipeline, error transformation |
+| `scaffold.test.ts` | 23 | File generation, hooks, agents, skills, design tokens, Playwright |
+| `schema.test.ts` | 20 | Zod validation edge cases, defaults, JSON Schema output |
+
+## Conceptual References
+
+Three ideas shaped the design.
+
+**Value mapping** (Simon Wardley). Wardley Maps show where components sit on the evolution axis, from genesis to commodity. Discovery uses this to assess which parts of a business process are ready for automation and which still need human judgment.
+
+**Value movement in the AI era** (Sangeet Paul Choudary, *Reshuffle*). Choudary describes how AI shifts value creation from linear pipelines to networked coordination. The valuable output of an AI-native product is not a dashboard. It is intelligence delivered to the right person at the right time. This is why EIID ends with Delivery as a distinct layer.
+
+**Intelligence where the user is** (Peter Steinberger). Steinberger's work on OpenClaw and CLI-first development argues that intelligence should go to the developer's environment, not pull the developer to a separate interface. SuperSkills generates Claude Code hooks and slash commands, not a web UI. The skills live where you already work.
+
+## License
+
+MIT

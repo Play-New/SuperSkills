@@ -1,0 +1,49 @@
+{
+  "projectName": "Customer Insight Engine",
+  "problem": "Sales team spends 4+ hours/day researching prospects manually",
+  "desiredOutcome": "Automated prospect enrichment that delivers insights before calls",
+  "context": {
+    "forWhom": "client",
+    "companyName": "AcmeCorp",
+    "businessDescription": "B2B SaaS platform for sales teams",
+    "industry": "B2B SaaS",
+    "employees": "50-200"
+  },
+  "currentProcess": [
+    "Manual LinkedIn research",
+    "Google search for company news",
+    "CRM data entry"
+  ],
+  "availableData": ["CRM contacts", "Email history", "LinkedIn profiles"],
+  "strategicAnalysis": {
+    "industryContext": "B2B sales tech is moving toward AI-powered enrichment. Manual research is becoming commoditized.",
+    "valueMovement": "Value is shifting from data collection to insight generation and timing.",
+    "currentPosition": "Manual processes, reactive outreach, inconsistent research quality.",
+    "targetPosition": "Automated enrichment, proactive insights, consistent intelligence before every call.",
+    "opportunities": [
+      "Pre-call briefings can save 30 min per call",
+      "Buying signal detection can prioritize hot leads",
+      "Competitor intelligence can inform pitch customization"
+    ]
+  },
+  "eiidMapping": {
+    "enrichment": {
+      "existingData": ["CRM contacts", "Email history"],
+      "missingData": ["Company news", "Funding status", "Tech stack"],
+      "sources": ["LinkedIn", "Crunchbase", "BuiltWith"]
+    },
+    "inference": {
+      "patterns": ["Buying signals", "Best contact time", "Deal probability"],
+      "predictions": ["Likely to convert", "Budget estimate"],
+      "anomalies": ["Sudden engagement drop", "Competitor mention"]
+    },
+    "interpretation": {
+      "insights": ["Pre-call briefing", "Weekly pipeline summary", "Competitor alerts"]
+    },
+    "delivery": {
+      "channels": ["email", "slack"],
+      "triggers": ["Before scheduled call", "New enrichment data"]
+    }
+  },
+  "createdAt": "2025-02-17T10:00:00Z"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "efficiency",
+  "version": "1.0.0",
+  "description": "Performance and cost optimization skill. Bundle analysis, Core Web Vitals, N+1 query detection, API cost estimation. Includes Supabase query optimization, Vercel edge/ISR, Inngest step batching, Next.js Server Components.",
+  "author": {
+    "name": "SuperSkills"
+  }
+}

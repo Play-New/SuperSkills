@@ -1,0 +1,8 @@
+{
+  "name": "strategy",
+  "version": "1.0.0",
+  "description": "Strategic alignment and opportunity scanning skill. Checks changes against project goals, detects scope creep, and proactively suggests data, pattern, insight, and delivery opportunities the project is not using yet.",
+  "author": {
+    "name": "SuperSkills"
+  }
+}

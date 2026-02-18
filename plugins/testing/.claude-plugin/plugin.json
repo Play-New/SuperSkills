@@ -1,0 +1,8 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "description": "Testing skill for vitest and Playwright. Sets up unit tests, E2E browser tests, accessibility audits. Includes tool-specific testing for Supabase, Inngest, and Next.js. Blocks task completion while tests fail.",
+  "author": {
+    "name": "SuperSkills"
+  }
+}

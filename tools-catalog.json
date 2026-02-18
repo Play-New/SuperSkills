@@ -1,0 +1,243 @@
+{
+  "version": "1.0.0",
+  "categories": {
+    "core": "Always included in every project",
+    "delivery": "Push intelligence TO the user",
+    "enrichment": "Get external data",
+    "community": "Free channels with official APIs",
+    "testing": "Verify behavior and quality"
+  },
+  "tools": [
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "category": "core",
+      "description": "PostgreSQL + Auth + Storage + pgvector + Edge Functions",
+      "sdk": "@supabase/supabase-js",
+      "envVars": ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "EU (Frankfurt)"
+      },
+      "provides": ["database", "auth", "storage", "vectors", "edge-functions"]
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "category": "core",
+      "description": "Hosting + Edge + Preview deployments",
+      "sdk": null,
+      "envVars": ["VERCEL_URL"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "Global (configurable)"
+      },
+      "provides": ["hosting", "edge", "preview"]
+    },
+    {
+      "id": "inngest",
+      "name": "Inngest",
+      "category": "core",
+      "description": "Workflow engine + Cron + Retry + Step functions",
+      "sdk": "inngest",
+      "envVars": ["INNGEST_EVENT_KEY", "INNGEST_SIGNING_KEY"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "US (EU available)"
+      },
+      "provides": ["cron", "workflows", "retry", "events"]
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "category": "core",
+      "description": "LLM for intelligence layer",
+      "sdk": "@anthropic-ai/sdk",
+      "envVars": ["ANTHROPIC_API_KEY"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "US"
+      },
+      "provides": ["llm", "reasoning", "generation"]
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "category": "core",
+      "description": "Embeddings for vector search",
+      "sdk": "openai",
+      "envVars": ["OPENAI_API_KEY"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "US"
+      },
+      "provides": ["embeddings"],
+      "note": "Use text-embedding-3-small for cost efficiency"
+    },
+    {
+      "id": "brevo",
+      "name": "Brevo",
+      "category": "delivery",
+      "description": "Email + SMS + WhatsApp Business (official)",
+      "sdk": "@getbrevo/brevo",
+      "envVars": ["BREVO_API_KEY"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "EU"
+      },
+      "provides": ["email", "sms", "whatsapp"],
+      "channels": ["email", "sms", "whatsapp"],
+      "note": "Official WhatsApp Business API, EU-based"
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram Bot API",
+      "category": "community",
+      "description": "Telegram bot for push notifications",
+      "sdk": "grammy",
+      "envVars": ["TELEGRAM_BOT_TOKEN"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": false,
+        "dataLocation": "Global"
+      },
+      "provides": ["telegram"],
+      "channels": ["telegram"],
+      "note": "Official API, free, zero ban risk"
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "category": "community",
+      "description": "Slack bot/webhooks for team notifications",
+      "sdk": "@slack/bolt",
+      "envVars": ["SLACK_BOT_TOKEN", "SLACK_SIGNING_SECRET"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "US (EU available)"
+      },
+      "provides": ["slack"],
+      "channels": ["slack"],
+      "note": "Official API, free tier available"
+    },
+    {
+      "id": "discord",
+      "name": "Discord",
+      "category": "community",
+      "description": "Discord bot for community notifications",
+      "sdk": "discord.js",
+      "envVars": ["DISCORD_BOT_TOKEN"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "US"
+      },
+      "provides": ["discord"],
+      "channels": ["discord"],
+      "note": "Official API, free"
+    },
+    {
+      "id": "baileys",
+      "name": "Baileys (WhatsApp)",
+      "category": "community",
+      "description": "WhatsApp Web protocol (unofficial)",
+      "sdk": "@whiskeysockets/baileys",
+      "envVars": [],
+      "gdpr": {
+        "compliant": false,
+        "dpaAvailable": false,
+        "dataLocation": "Local"
+      },
+      "provides": ["whatsapp-personal"],
+      "channels": ["whatsapp"],
+      "note": "Unofficial, free, ban risk. Use for dev/personal only. OpenClaw best practice.",
+      "risk": "Account ban possible. Not for production/business use."
+    },
+    {
+      "id": "apify",
+      "name": "Apify",
+      "category": "enrichment",
+      "description": "Web scraping + pre-built actors",
+      "sdk": "apify-client",
+      "envVars": ["APIFY_API_TOKEN"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "EU"
+      },
+      "provides": ["scraping", "crawling"],
+      "note": "Handles proxies, captchas, rate limits"
+    },
+    {
+      "id": "supermemory",
+      "name": "Supermemory",
+      "category": "enrichment",
+      "description": "Memory API + RAG + Connectors (Drive, Notion, OneDrive)",
+      "sdk": "@supermemory/ai-sdk",
+      "envVars": ["SUPERMEMORY_API_KEY"],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": true,
+        "dataLocation": "Global (Cloudflare)"
+      },
+      "provides": ["memory", "rag", "connectors"],
+      "note": "Use when you need auto-sync from external sources. Otherwise Supabase + pgvector is enough.",
+      "optional": true
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright",
+      "category": "testing",
+      "description": "Browser automation for E2E tests, visual regression, accessibility auditing, and web scraping",
+      "sdk": "@playwright/test",
+      "envVars": [],
+      "gdpr": {
+        "compliant": true,
+        "dpaAvailable": false,
+        "dataLocation": "Local"
+      },
+      "provides": ["e2e-testing", "visual-regression", "accessibility-audit", "browser-scraping", "enrichment-scraping"],
+      "channels": [],
+      "note": "Self-hosted, no API costs. Testing and dev scraping. Apify for production scraping at scale with proxy management."
+    }
+  ],
+  "stacks": {
+    "minimal": {
+      "description": "Simplest AI-native app",
+      "tools": ["supabase", "vercel", "claude", "brevo"]
+    },
+    "standard": {
+      "description": "Full AI-native with workflows",
+      "tools": ["supabase", "vercel", "inngest", "claude", "openai", "brevo"]
+    },
+    "multichannel": {
+      "description": "Push to all channels",
+      "tools": ["supabase", "vercel", "inngest", "claude", "openai", "brevo", "telegram", "slack"]
+    }
+  },
+  "eiidMapping": {
+    "enrichment": {
+      "description": "Connect data, fill gaps, normalize",
+      "tools": ["supabase", "apify", "supermemory", "playwright"]
+    },
+    "inference": {
+      "description": "Patterns, predictions, anomalies",
+      "tools": ["claude", "openai", "supabase"]
+    },
+    "interpretation": {
+      "description": "Generate insights from inference results",
+      "tools": ["claude"]
+    },
+    "delivery": {
+      "description": "Push insights where users are",
+      "tools": ["brevo", "telegram", "slack", "discord", "baileys"]
+    }
+  }
+}

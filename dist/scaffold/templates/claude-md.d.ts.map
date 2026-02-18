@@ -1,0 +1,1 @@
+{"version":3,"file":"claude-md.d.ts","sourceRoot":"","sources":["../../../src/scaffold/templates/claude-md.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,0BAA0B,CAAC;AAChE,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,wBAAwB,CAAC;AAE9D,wBAAgB,gBAAgB,CAAC,SAAS,EAAE,eAAe,EAAE,KAAK,EAAE,eAAe,GAAG,MAAM,CAkC3F"}

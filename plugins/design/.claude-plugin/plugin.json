@@ -1,0 +1,8 @@
+{
+  "name": "design",
+  "version": "1.0.0",
+  "description": "Design system skill for Next.js projects. Enforces shadcnblocks/shadcn usage, design tokens, WCAG 2.1 AA accessibility, and responsive design. Five hard rules: shadcnblocks FIRST, shadcn base SECOND, NEVER custom CSS, global tokens required, zero arbitrary values.",
+  "author": {
+    "name": "SuperSkills"
+  }
+}

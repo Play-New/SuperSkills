@@ -1,0 +1,8 @@
+{
+  "name": "trust",
+  "version": "1.0.0",
+  "description": "Security and compliance skill. OWASP Top 10, GDPR, secrets scanning, auth verification. Includes Supabase RLS, Vercel headers, Inngest event security, Next.js Server Action validation. Blocks on: credentials in code, injection, XSS, auth bypass, PII exposure.",
+  "author": {
+    "name": "SuperSkills"
+  }
+}
