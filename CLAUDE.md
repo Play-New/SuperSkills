@@ -14,17 +14,17 @@ Two ways to start:
 **Option A: From the terminal**
 
 ```
-npx superskills           # full pipeline: discovery → tools → scaffold
-npx superskills init      # optional: saves API key so you don't paste it every time
+superskills           # full pipeline: discovery → tools → scaffold
+superskills init      # optional: saves API key so you don't paste it every time
 ```
 
 **Option B: From Claude Code**
 
 ```
-npx superskills init      # one-time: saves API key + writes instructions to ~/.claude/CLAUDE.md
+superskills init      # one-time: saves API key + writes instructions to ~/.claude/CLAUDE.md
 ```
 
-Then open Claude Code and describe the business problem. Claude Code does the EIID analysis itself (no API key needed), creates `discovery.json`, calls `npx superskills scaffold --json --discovery discovery.json --output ./`.
+Then open Claude Code and describe the business problem. Claude Code does the EIID analysis itself (no API key needed), creates `discovery.json`, calls `superskills scaffold --json --discovery discovery.json --output ./`.
 
 Both paths produce the same project. The `tools` command is optional — use it only to review or override the auto-selected stack.
 
