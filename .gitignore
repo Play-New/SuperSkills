@@ -38,5 +38,5 @@ tmp/
 temp/
 *.tmp
 
-# Claude Code generated folders (for testing)
-.claude/
+# Claude Code generated folders (root only, not standalone-agents or plugins)
+/.claude/
