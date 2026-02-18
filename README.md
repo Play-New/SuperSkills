@@ -13,11 +13,11 @@ A CLI that turns a business problem into a working AI-native project. You descri
 
 ## What AI-native means
 
-Wardley's evolution model tracks where each component in a value chain sits, from genesis to commodity. Databases moved through this arc in two decades: custom-built in the 1990s, buyable products by 2010, hosted Postgres at $25/month today. Data processing follows the same path. What cost a team of analysts three weeks now takes a model seconds and a few cents.
+Every component in a value chain evolves from custom-built to commodity. Databases took two decades. Data processing is getting there now: what cost a team of analysts three weeks takes a model seconds and a few cents.
 
-Sangeet Paul Choudary traces what happens next in *Reshuffle*: when processing becomes a commodity, value moves to delivering intelligence that triggers action. Consider a B2B distributor with 200 employees. Orders sit in Gmail, inventory in the ERP, supplier lead times on a portal. Anyone with an API key can process this data. The distributor's edge is in connecting those three sources, detecting that a key supplier's lead times increased 40% over six weeks, and surfacing that finding to the procurement manager before she places the next order.
+When processing becomes a commodity, the edge moves to what happens after the analysis. A B2B distributor has orders in Gmail, inventory in the ERP, supplier lead times on a portal. Anyone can process this data. The edge is in connecting those sources, detecting that a supplier's lead times increased 40% over six weeks, and getting that finding to the procurement manager before she places the next order.
 
-Most software stops at analysis and produces a dashboard. The ops manager checks it Monday morning. The delayed shipment happened Friday. An AI-native product completes the value chain: it connects the data, runs the analysis, decides what matters, and delivers the result to the person who can act, before the window closes.
+Most software stops at analysis and produces a dashboard. The ops manager checks it Monday. The delayed shipment happened Friday. An AI-native product completes the chain: connect the data, run the analysis, decide what matters, deliver the result before the window closes.
 
 SuperSkills structures every project around four layers that map this chain:
 
@@ -188,15 +188,15 @@ All skills include tool-specific best practices for Supabase, Vercel, Inngest, a
 
 ## EIID in practice
 
-Same distributor from above, layer by layer.
+Same distributor, layer by layer.
 
-**Enrichment.** Orders arrive as email attachments in three formats: PDF, Excel, and plain text. The ERP stores inventory with SKU codes that don't match the supplier portal's product IDs. Enrichment normalizes these into a single schema, fills missing fields from historical data, and links supplier IDs to internal SKUs. Without a clean dataset, every downstream step produces garbage.
+**Enrichment.** Orders arrive as PDF, Excel, and plain text. The ERP uses SKU codes that don't match the supplier portal. Enrichment normalizes everything into one schema and links the IDs.
 
-**Inference.** Six weeks of supplier lead time data show a pattern: one supplier's average delivery went from 5 days to 8. Order volumes in the DACH region dropped 12% month-over-month while Southern Europe grew 7%. A pricing anomaly surfaces where the same SKU costs 15% more through one channel. None of these are visible in any single source.
+**Inference.** One supplier's lead time went from 5 days to 8 over six weeks. DACH orders dropped 12% month-over-month. A pricing anomaly shows the same SKU costing 15% more through one channel. None of these are visible in a single source.
 
-**Interpretation.** The lead time increase matters because that supplier handles 30% of high-margin orders. The DACH drop is seasonal and matches last year's Q1 numbers. The pricing anomaly affects $40K in monthly spend. Interpretation ranks these by business impact: supplier risk first, pricing second, DACH trend flagged but deprioritized.
+**Interpretation.** The lead time increase matters: that supplier handles 30% of high-margin orders. The DACH drop matches last year's seasonal pattern. The pricing anomaly affects $40K/month. Supplier risk first, pricing second, DACH deprioritized.
 
-**Delivery.** The procurement manager gets a Slack message at 8am Tuesday with the supplier risk analysis and a suggested reallocation. The CFO gets a weekly email summarizing the pricing anomaly with a one-click approval to switch channels. The regional manager gets nothing about DACH because the system determined it was seasonal noise.
+**Delivery.** Procurement manager gets a Slack message Tuesday morning with the supplier risk and a suggested reallocation. CFO gets a weekly email on the pricing anomaly. Regional manager gets nothing about DACH because it's seasonal noise.
 
 ## What Gets Generated
 
