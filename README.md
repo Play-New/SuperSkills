@@ -48,7 +48,7 @@ That is all you need to get started. The rest (Supabase, Vercel, etc.) comes lat
 Not published to npm yet. Install from the repo:
 
 ```bash
-git clone https://github.com/Play-New/superskills.git
+git clone https://github.com/Play-New/SuperSkills.git
 cd superskills
 npm install && npm run build
 npm link
@@ -129,7 +129,7 @@ Don't need the full pipeline? Each skill works standalone. Pick one and add it t
 
 ```bash
 # Clone the repo (once)
-git clone https://github.com/Play-New/superskills.git
+git clone https://github.com/Play-New/SuperSkills.git
 
 # Copy the skill you need into your project
 cp -r superskills/standalone-agents/design/.claude/ your-project/.claude/
@@ -342,7 +342,7 @@ Print the full JSON Schema with `superskills discovery --schema`.
 ### Setup
 
 ```bash
-git clone https://github.com/Play-New/superskills.git
+git clone https://github.com/Play-New/SuperSkills.git
 cd superskills
 npm install
 ```
