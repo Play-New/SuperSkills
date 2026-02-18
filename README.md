@@ -23,7 +23,7 @@ SuperSkills structures every project around four layers that map this chain:
 
 | Layer | What it does |
 |-------|-------------|
-| **E**nrichment | Connect and normalize data from scattered sources (Gmail, ERP, APIs, portals) |
+| **E**nrichment | Connect and normalize data from scattered sources (email, ERP, APIs, portals) |
 | **I**nference | Detect patterns, predict outcomes, flag anomalies |
 | **I**nterpretation | Decide what matters and how to frame it for the human |
 | **D**elivery | Push insights where people are, triggered by the right conditions |
