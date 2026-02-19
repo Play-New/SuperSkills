@@ -11,8 +11,8 @@ Five autonomous skills for AI-native product development.
 
 Two ways to use SuperSkills:
 
-1. **New project.** Describe a business problem. SuperSkills generates a full Next.js + Supabase project with the five skills already configured.
-2. **Existing project.** Copy one or more skills into any codebase. They work immediately as Claude Code slash commands. No scaffold, no dependencies, no lock-in.
+1. **Existing project.** Copy one or more skills into any codebase. They work immediately as Claude Code slash commands. No scaffold, no dependencies, no lock-in.
+2. **New project.** Describe a business problem. SuperSkills generates a full Next.js + Supabase project with the five skills already configured.
 
 ## What AI-native means
 
@@ -22,7 +22,7 @@ Every component in a value chain evolves from custom-built to commodity. Databas
 2. **Where to differentiate.** The edge moves to what sits above commodity in the chain: connecting data sources nobody was combining, interpreting patterns in context, delivering findings to the person who can act on them before the window closes.
 3. **What to create.** Commodity processing opens opportunities that didn't exist before. A B2B distributor can now predict supplier delays from lead time trends and reroute orders automatically. That product wasn't viable when the analysis alone cost three analyst-weeks.
 
-SuperSkills structures every project around four layers that map this chain:
+Every skill checks code against four layers:
 
 | Layer | What it does |
 |-------|-------------|
@@ -50,15 +50,11 @@ This is **EIID**. Discovery maps your business problem to these four layers. Eve
 ## Install
 
 ```bash
-npm install -g superskills
-```
-
-Or install from source:
-
-```bash
 git clone https://github.com/Play-New/SuperSkills.git
 cd SuperSkills && npm install && npm run build && npm link
 ```
+
+After `npm link`, the `superskills` command works globally.
 
 If you only need the standalone skills (no CLI), skip the install. Just clone and copy the skill folders into your project (see below).
 
@@ -91,6 +87,8 @@ Without hooks, you run skills manually via slash commands. With hooks, trust che
 ```bash
 cp SuperSkills/skills/settings.json your-project/.claude/settings.json
 ```
+
+If you already have a `.claude/settings.json`, merge the hooks manually instead of overwriting.
 
 This adds: security gate on every Write/Edit, security gate on Bash commands, test verification + full audit (trust, strategy, design) before stopping.
 
@@ -195,19 +193,9 @@ Given a business problem, scaffold produces a Next.js project with:
 - **Next.js + Supabase + Inngest** application structure with delivery integrations
 - **Playwright and vitest** configured for E2E and unit testing
 
-## The Five Skills
+## How Skills Run
 
-Skills are checklists with teeth. They check code against specific criteria, report findings to CLAUDE.md, and in two cases can block.
-
-| Skill | What It Checks | Blocks? |
-|-------|---------------|---------|
-| **strategy** | EIID alignment, scope creep, proactive opportunity suggestions | No |
-| **design** | shadcnblocks/shadcn usage, WCAG 2.1 AA, design tokens, responsive | No |
-| **trust** | OWASP Top 10, GDPR, hardcoded secrets, injection, auth bypass | Yes |
-| **efficiency** | Bundle size, Core Web Vitals, N+1 queries, API costs | No |
-| **testing** | Test pass/fail, coverage gaps, critical flow verification | Yes (blocks stop) |
-
-### How They Run
+Skills are checklists with teeth. They check code, report findings to CLAUDE.md, and two of them block: **trust** blocks on security violations (credentials in code, injection, XSS, auth bypass, PII exposure), **testing** blocks when tests fail.
 
 **Automatically via hooks** (configured in `.claude/settings.json`):
 
@@ -327,7 +315,7 @@ Print the full JSON Schema with `superskills discovery --schema`.
 
 ```bash
 git clone https://github.com/Play-New/SuperSkills.git
-cd superskills
+cd SuperSkills
 npm install
 ```
 
