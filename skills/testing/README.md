@@ -5,7 +5,7 @@ Test setup and verification with vitest and Playwright. Includes tool-specific t
 ## Install
 
 ```bash
-cp -r standalone-agents/testing/.claude/ your-project/.claude/
+cp -r skills/testing/.claude/ your-project/.claude/
 ```
 
 Open the project in Claude Code. The commands work immediately.

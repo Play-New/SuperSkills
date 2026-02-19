@@ -7,7 +7,7 @@ Strategic alignment and opportunity scanning for any project. This is the recomm
 Copy into your project:
 
 ```bash
-cp -r standalone-agents/strategy/.claude/ your-project/.claude/
+cp -r skills/strategy/.claude/ your-project/.claude/
 ```
 
 Open the project in Claude Code. The commands work immediately.
@@ -37,10 +37,10 @@ Four layers every AI-native product needs:
 
 Once CLAUDE.md has the EIID mapping, install other skills as needed:
 
-- UI work? Copy `standalone-agents/design/.claude/` and run `/design-init`
-- User data? Copy `standalone-agents/trust/.claude/` and run `/trust-init`
-- Need tests? Copy `standalone-agents/testing/.claude/` and run `/testing-init`
-- Performance concerns? Copy `standalone-agents/efficiency/.claude/` and run `/efficiency-init`
+- UI work? Copy `skills/design/.claude/` and run `/design-init`
+- User data? Copy `skills/trust/.claude/` and run `/trust-init`
+- Need tests? Copy `skills/testing/.claude/` and run `/testing-init`
+- Performance concerns? Copy `skills/efficiency/.claude/` and run `/efficiency-init`
 
 ## Subagent
 

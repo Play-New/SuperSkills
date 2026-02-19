@@ -71,8 +71,8 @@ Each skill works standalone on any codebase. No CLI install, no scaffold, no API
 git clone https://github.com/Play-New/SuperSkills.git
 
 # Copy the skills you need into your project
-cp -r SuperSkills/standalone-agents/trust/.claude/ your-project/.claude/
-cp -r SuperSkills/standalone-agents/design/.claude/ your-project/.claude/
+cp -r SuperSkills/skills/trust/.claude/ your-project/.claude/
+cp -r SuperSkills/skills/design/.claude/ your-project/.claude/
 ```
 
 The `.claude/` folders merge. Open the project in Claude Code and run:

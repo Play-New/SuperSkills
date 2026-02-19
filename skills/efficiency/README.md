@@ -5,7 +5,7 @@ Performance and cost optimization. Bundle analysis, Core Web Vitals, N+1 query d
 ## Install
 
 ```bash
-cp -r standalone-agents/efficiency/.claude/ your-project/.claude/
+cp -r skills/efficiency/.claude/ your-project/.claude/
 ```
 
 Open the project in Claude Code. The commands work immediately.

@@ -5,7 +5,7 @@ Security and compliance checks. OWASP Top 10, GDPR, secrets scanning, auth verif
 ## Install
 
 ```bash
-cp -r standalone-agents/trust/.claude/ your-project/.claude/
+cp -r skills/trust/.claude/ your-project/.claude/
 ```
 
 Open the project in Claude Code. The commands work immediately.

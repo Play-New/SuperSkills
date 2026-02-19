@@ -5,7 +5,7 @@ Enforces shadcnblocks/shadcn usage, design tokens, WCAG 2.1 AA accessibility, an
 ## Install
 
 ```bash
-cp -r standalone-agents/design/.claude/ your-project/.claude/
+cp -r skills/design/.claude/ your-project/.claude/
 ```
 
 Open the project in Claude Code. The commands work immediately.

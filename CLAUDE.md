@@ -67,7 +67,7 @@ src/
       skill-agents.ts            Five .claude/agents/*.md subagent files
       skill-commands.ts          Eleven .claude/skills/*/SKILL.md slash commands
       teammate-prompts.ts        Prompts for all five skills
-standalone-agents/               Standalone skills for Claude Code (no scaffold needed)
+skills/               Standalone skills for Claude Code (no scaffold needed)
   design/  trust/  testing/  efficiency/  strategy/
   (each has .claude/agents/ + .claude/skills/)
 plugins/                         Claude Code / Cowork plugins (namespaced commands)
@@ -87,7 +87,7 @@ tools-catalog.json               GDPR-verified tools with categories and EIID ma
 
 Each skill also exists as a standalone package that works without the full pipeline. Two formats:
 
-- **`standalone-agents/`** — for Claude Code. Copy `.claude/` into any project.
+- **`skills/`** — for Claude Code. Copy `.claude/` into any project.
 - **`plugins/`** — for Cowork (Claude Desktop). Install as a plugin.
 
 All standalone skills include tool-specific best practices for Supabase, Vercel, Inngest, and Next.js.

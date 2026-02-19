@@ -1,5 +1,5 @@
 #!/bin/bash
-# Checks that key rules in standalone-agents and plugins match scaffold templates.
+# Checks that key rules in skills and plugins match scaffold templates.
 # Run: bash scripts/check-sync.sh
 
 set -e
@@ -24,7 +24,7 @@ echo "Checking standalone agents and plugins for drift..."
 echo ""
 
 # Trust: blocking rules must appear in all three places
-for file in standalone-agents/trust/.claude/agents/trust.md plugins/trust/skills/security/SKILL.md; do
+for file in skills/trust/.claude/agents/trust.md plugins/trust/skills/security/SKILL.md; do
   check_pattern "Credentials in code" "$file" "Trust blocking rule 1"
   check_pattern "SQL injection" "$file" "Trust blocking rule 2"
   check_pattern "XSS" "$file" "Trust blocking rule 3"
@@ -33,19 +33,19 @@ for file in standalone-agents/trust/.claude/agents/trust.md plugins/trust/skills
 done
 
 # Design: hard rules must appear in design agent and plugin
-for file in standalone-agents/design/.claude/agents/design.md plugins/design/skills/design-system/SKILL.md; do
+for file in skills/design/.claude/agents/design.md plugins/design/skills/design-system/SKILL.md; do
   check_pattern "shadcnblocks" "$file" "Design rule: shadcnblocks first"
   check_pattern "shadcn" "$file" "Design rule: shadcn second"
   check_pattern "custom CSS" "$file" "Design rule: no custom CSS"
 done
 
 # Testing: blocking behavior must be documented
-for file in standalone-agents/testing/.claude/agents/testing.md plugins/testing/skills/test-strategy/SKILL.md; do
+for file in skills/testing/.claude/agents/testing.md plugins/testing/skills/test-strategy/SKILL.md; do
   check_pattern "ok.*false" "$file" "Testing blocking behavior"
 done
 
 # Strategy: EIID framework must be referenced
-for file in standalone-agents/strategy/.claude/agents/strategy.md plugins/strategy/skills/alignment/SKILL.md; do
+for file in skills/strategy/.claude/agents/strategy.md plugins/strategy/skills/alignment/SKILL.md; do
   check_pattern "opportunity" "$file" "Strategy opportunity scanning"
 done
 
@@ -53,6 +53,6 @@ echo ""
 if [ $ERRORS -eq 0 ]; then
   echo -e "${GREEN}All sync checks passed.${NC}"
 else
-  echo -e "${RED}${ERRORS} drift issues found.${NC} Update standalone-agents/ and plugins/ to match scaffold templates."
+  echo -e "${RED}${ERRORS} drift issues found.${NC} Update skills/ and plugins/ to match scaffold templates."
   exit 1
 fi
