@@ -84,6 +84,16 @@ The `.claude/` folders merge. Open the project in Claude Code and run:
 
 That's it. The skills read your code, check it against their rules, and append findings to CLAUDE.md.
 
+### Add autonomous hooks (optional)
+
+Without hooks, you run skills manually via slash commands. With hooks, trust checks every file write automatically and tests run before every stop.
+
+```bash
+cp SuperSkills/skills/settings.json your-project/.claude/settings.json
+```
+
+This adds: security gate on every Write/Edit, security gate on Bash commands, test verification + full audit (trust, strategy, design) before stopping.
+
 ### Available skills
 
 | Skill | What It Checks | Commands |
