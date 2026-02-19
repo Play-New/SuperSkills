@@ -50,11 +50,15 @@ This is **EIID**. Discovery maps your business problem to these four layers. Eve
 ## Install
 
 ```bash
+npm install -g superskills
+```
+
+Or install from source:
+
+```bash
 git clone https://github.com/Play-New/SuperSkills.git
 cd SuperSkills && npm install && npm run build && npm link
 ```
-
-After `npm link`, the `superskills` command works globally.
 
 If you only need the standalone skills (no CLI), skip the install. Just clone and copy the skill folders into your project (see below).
 
