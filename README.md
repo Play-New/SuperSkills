@@ -7,9 +7,12 @@
               |_|
 ```
 
-Business problem in, working project out.
+Five autonomous skills for AI-native product development.
 
-A CLI that turns a business problem into a working AI-native project. You describe the problem. SuperSkills figures out the data sources, the delivery channels, the tool stack, and the project structure. Then it generates everything, including five skills that keep checking your code as you build.
+Two ways to use SuperSkills:
+
+1. **New project.** Describe a business problem. SuperSkills generates a full Next.js + Supabase project with the five skills already configured.
+2. **Existing project.** Copy one or more skills into any codebase. They work immediately as Claude Code slash commands. No scaffold, no dependencies, no lock-in.
 
 ## What AI-native means
 
@@ -38,37 +41,83 @@ This is **EIID**. Discovery maps your business problem to these four layers. Eve
 
 ## Prerequisites
 
-- **Node.js 20 or later.** Check with `node --version`. If you need to install or update: [nodejs.org](https://nodejs.org)
-- **An Anthropic API key** (only for CLI mode). Get one at [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys). Free tier available. Not needed if you use SuperSkills from Claude Code.
+**For standalone skills:** just Claude Code. Nothing else to install.
 
-That is all you need to get started. The rest (Supabase, Vercel, etc.) comes later when you set up the generated project.
+**For the CLI (new project generation):**
+- Node.js 20 or later. Check with `node --version`.
+- An Anthropic API key: [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys). Free tier available. Not needed from Claude Code.
 
 ## Install
 
-Not published to npm yet. Install from the repo:
+```bash
+npm install -g superskills
+```
+
+Or install from source:
 
 ```bash
 git clone https://github.com/Play-New/SuperSkills.git
-cd superskills
-npm install && npm run build
-npm link
+cd SuperSkills && npm install && npm run build && npm link
 ```
 
-After `npm link`, the `superskills` command works globally. To uninstall later: `npm unlink -g superskills`.
+If you only need the standalone skills (no CLI), skip the install. Just clone and copy the skill folders into your project (see below).
 
-## Quick Start
+## Add skills to an existing project
 
-Two ways to start. Pick the one that fits how you work.
+Each skill works standalone on any codebase. No CLI install, no scaffold, no API key.
 
-### Option A: From the terminal
+```bash
+# Clone once
+git clone https://github.com/Play-New/SuperSkills.git
 
-One command. It asks about your business problem, analyzes it, picks tools, and generates the project.
+# Copy the skills you need into your project
+cp -r SuperSkills/standalone-agents/trust/.claude/ your-project/.claude/
+cp -r SuperSkills/standalone-agents/design/.claude/ your-project/.claude/
+```
+
+The `.claude/` folders merge. Open the project in Claude Code and run:
+
+```
+/trust-audit      OWASP Top 10 + GDPR scan on your existing code
+/design-review    Audit shadcn usage, a11y, tokens, responsive
+```
+
+That's it. The skills read your code, check it against their rules, and append findings to CLAUDE.md.
+
+### Available skills
+
+| Skill | What It Checks | Commands |
+|-------|---------------|----------|
+| **strategy** | EIID alignment, scope creep, opportunity suggestions | `/strategy-start`, `-init`, `-review` |
+| **design** | shadcnblocks/shadcn usage, WCAG 2.1 AA, design tokens | `/design-init`, `-review` |
+| **trust** | OWASP Top 10, GDPR, hardcoded secrets, injection, auth | `/trust-init`, `-audit` |
+| **testing** | vitest + Playwright, test pass/fail, coverage gaps | `/testing-init`, `-verify` |
+| **efficiency** | Bundle size, Core Web Vitals, N+1 queries, API costs | `/efficiency-init`, `-review` |
+
+All skills include best practices for Supabase, Vercel, Inngest, and Next.js. Each skill folder has a README with details.
+
+### As plugins (Claude Code or Cowork)
+
+Skills are also available as Claude Code plugins with namespaced commands (`/strategy:start` instead of `/strategy-start`).
+
+```bash
+# Load locally
+claude --plugin-dir SuperSkills/plugins/strategy
+
+# Or zip for Cowork
+cd plugins && zip -r strategy.zip strategy/
+# Drag into Cowork's Plugins tab
+```
+
+## Generate a new project
+
+For new projects, the CLI runs the full pipeline: describe the problem, analyze it through EIID, pick tools, generate everything.
 
 ```bash
 superskills
 ```
 
-If you don't have an API key set, it asks for one and tells you where to get it. Everything is guided step by step.
+It asks about your business problem step by step. If you don't have an API key set, it asks for one.
 
 Optional one-time setup (saves your API key so you don't paste it every time):
 
@@ -76,28 +125,19 @@ Optional one-time setup (saves your API key so you don't paste it every time):
 superskills init
 ```
 
-### Option B: From Claude Code
+### From Claude Code
 
-No Anthropic API key needed. Claude Code IS Claude — it does the EIID analysis itself. SuperSkills only handles scaffolding.
-
-One-time setup:
+No Anthropic API key needed. Claude Code does the EIID analysis itself. SuperSkills only handles scaffolding.
 
 ```bash
-superskills init
+superskills init    # one-time: saves API key + writes instructions to ~/.claude/CLAUDE.md
 ```
 
-This saves your API key and writes instructions to `~/.claude/CLAUDE.md` so Claude Code knows how to use SuperSkills.
-
-After that, open Claude Code and describe your business problem. Claude Code will:
-
-1. Analyze it through the EIID framework (no API call needed)
-2. Create a `discovery.json` with the analysis
-3. Call `superskills scaffold --json --discovery discovery.json --output ./`
-4. Follow the post-scaffold instructions
+Then open Claude Code and describe the business problem. Claude Code will create a `discovery.json` and call `superskills scaffold --json --discovery discovery.json --output ./`.
 
 ### After scaffold
 
-Both paths produce the same project. Scaffold prints exact next steps:
+Scaffold prints exact next steps:
 
 ```bash
 cd your-project
@@ -108,10 +148,10 @@ npx supabase start     # needs Docker
 npm run dev
 ```
 
-Then open the project in Claude Code and run the init skills:
+Then open in Claude Code and run the init skills:
 
 ```
-/strategy-start     Defines the project, maps EIID, writes CLAUDE.md (if not done yet)
+/strategy-start     Defines the project, maps EIID, writes CLAUDE.md
 /strategy-init      Validates the EIID mapping, sets priorities
 /design-init        Asks for brand, configures shadcnblocks + shadcn + tokens
 /trust-init         Sets up auth, RLS policies, CORS
@@ -120,72 +160,6 @@ Then open the project in Claude Code and run the init skills:
 ```
 
 These run once. After that, hooks handle ongoing checks automatically.
-
-## Use a Single Skill (no scaffold needed)
-
-Don't need the full pipeline? Each skill works standalone. Pick one and add it to any existing project. No API key, no discovery, no scaffold.
-
-### For Claude Code
-
-```bash
-# Clone the repo (once)
-git clone https://github.com/Play-New/SuperSkills.git
-
-# Copy the skill you need into your project
-cp -r superskills/standalone-agents/design/.claude/ your-project/.claude/
-```
-
-You can copy multiple skills — the `.claude/` folders merge:
-
-```bash
-cp -r superskills/standalone-agents/design/.claude/ your-project/.claude/
-cp -r superskills/standalone-agents/trust/.claude/ your-project/.claude/
-```
-
-Open the project in Claude Code. The slash commands work immediately:
-
-```
-/design-init      Set up shadcn + shadcnblocks + design tokens
-/design-review    Audit UI, a11y, responsive
-```
-
-Each skill folder has a README.md with installation and usage instructions.
-
-### As Claude Code Plugins
-
-Each skill is also a Claude Code plugin. Plugins use namespaced commands (`/strategy:start` instead of `/strategy-start`).
-
-**Local testing** (load without installing):
-
-```bash
-claude --plugin-dir superskills/plugins/strategy
-```
-
-**From a marketplace** (after SuperSkills is published):
-
-```
-/plugin install strategy@superskills
-```
-
-**Cowork** (Claude's desktop knowledge work mode): zip the plugin folder and upload it from the Cowork Plugins tab (click "+", drag the zip, "Upload"). Or install from the marketplace at [claude.com/plugins](https://claude.com/plugins).
-
-```bash
-# Example: create a zip for the strategy plugin
-cd plugins && zip -r strategy.zip strategy/ && cd ..
-# Then drag strategy.zip into Cowork's Plugins tab
-```
-
-### Available Skills
-
-| Skill | What It Does | Standalone Commands | Plugin Commands |
-|-------|-------------|-------------------|----------------|
-| **strategy** | Project definition, alignment, opportunity scan | `/strategy-start`, `-init`, `-review` | `/strategy:start`, `:init`, `:review` |
-| **design** | shadcnblocks/shadcn, design tokens, WCAG 2.1 AA | `/design-init`, `-review` | `/design:init`, `:review` |
-| **trust** | OWASP Top 10, GDPR, secrets, auth, RLS | `/trust-init`, `-audit` | `/trust:init`, `:audit` |
-| **testing** | vitest + Playwright, test verification | `/testing-init`, `-verify` | `/testing:init`, `:verify` |
-| **efficiency** | Bundle size, CWV, N+1 queries, API costs | `/efficiency-init`, `-review` | `/efficiency:init`, `:review` |
-
-All skills include tool-specific best practices for Supabase, Vercel, Inngest, and Next.js.
 
 ## EIID in practice
 
