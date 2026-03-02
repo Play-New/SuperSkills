@@ -200,13 +200,12 @@ Compare across all component files:
 
 ### Craft (advisory)
 
-1. **Name test:** describe the UI to someone who cannot see it. Generic description = generic design.
-2. **Swap test:** swap typeface or layout for a default. Where it wouldn't matter = where you defaulted.
-3. **Spatial composition:** density variation between zones, intentional asymmetry, grid-breaking at focal points, negative space as grouping structure. Uniform spacing everywhere signals undesigned.
-4. **Typography character:** fonts chosen intentionally (not framework defaults), hierarchy works without color (size + weight alone), three distinguishable tiers.
-5. **Surfaces and depth:** lightness shifts between levels (2-5%), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
-6. **Atmosphere:** backgrounds and surfaces create a sense of place matching the direction, or deliberate absence.
-7. **Identity:** signature element visible, committed direction, anti-convergence (would another AI produce this?).
+Four dimensions, same as `/super:design`:
+
+1. **Spatial composition:** density variation between zones, intentional asymmetry, grid-breaking at focal points, negative space as grouping. Uniform spacing everywhere signals undesigned.
+2. **Typography:** hierarchy works without color (size + weight alone), three distinguishable tiers, fonts chosen intentionally (not framework defaults).
+3. **Surfaces and depth:** lightness shifts between levels (2-5%), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
+4. **Identity:** signature element visible, committed direction, anti-convergence (would another AI produce this?), atmosphere matching direction or deliberate absence.
 
 ---
 

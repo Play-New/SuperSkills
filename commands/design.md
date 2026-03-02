@@ -152,15 +152,17 @@ Score each layer: **strong**, **adequate**, **weak**. Prioritize based on the us
 
 ### 5. Propose
 
-The critique identified what's weak. Now apply `reference/design-craft.md` to generate improvements. Work through the relevant craft dimensions for each weak or adequate layer.
+The critique identified what's weak. Now apply `reference/design-craft.md` to generate improvements. Work through four craft dimensions for each weak or adequate layer.
 
-**Composition and layout:** spatial composition (density variation between zones, asymmetry, grid-breaking at focal points, negative space as grouping), hierarchy (size + weight + space + position producing three distinguishable tiers), section rhythm (consistent three-number cadence: major sections / groups / items), proportion (focal element visually larger than supporting content), density map (dense where users scan, generous where they focus).
+**Spatial composition:** density variation between zones (dense for scanning, generous for focus), hierarchy through size + weight + space + position (three distinguishable tiers), section rhythm (three-number cadence: major sections / groups / items), proportion (focal element larger than supporting content), asymmetry and grid-breaking at focal points, negative space as grouping structure.
 
-**Craft and surfaces:** surface hierarchy (2-5% lightness shifts between levels, not color jumps), border treatment (opacity-based, not solid), interactive states (hover, focus, active, disabled on every clickable element), typography layering (each level distinct in size + weight + color, hierarchy works without color), depth strategy (one strategy: borders-only or subtle-shadows or layered, not mixed).
+**Typography:** hierarchy works without color (size + weight alone produce three tiers), each level distinct in size + weight + color, fonts chosen intentionally (not framework defaults), monospace for aligned data.
 
-**Identity and atmosphere:** direction spectrum (density, temperature, energy, complexity — push intentionally, not default to middle), visual identity (signature element, committed direction, anti-convergence test), atmosphere (gradient, grain, or texture matching direction — or deliberate absence), color intent (every color has a documented job, not just a hex value).
+**Surfaces and depth:** lightness shifts between levels (2-5%, not color jumps), consistent depth strategy (borders-only or subtle-shadows or layered, not mixed), opacity-based borders, complete interactive states on every clickable element.
 
-If the design system documents layout architecture, typography scale, or composition rules, proposals must use those values. Section rhythm of 48/24/12 means proposals use 48/24/12. Density map says the metrics zone is generous means proposals give it space. The design system is the constraint, craft principles are the method.
+**Identity:** direction spectrum pushed intentionally (density, temperature, energy, complexity), signature element visible, committed direction (not half-measures), anti-convergence test, atmosphere matching direction (or deliberate absence), every color with a documented job.
+
+If the design system documents layout, typography scale, or composition rules, proposals use those values. Documented section rhythm of 48/24/12 means proposals use 48/24/12. Documented density map with a generous metrics zone means proposals give it space.
 
 For each proposed change:
 
@@ -238,15 +240,12 @@ Compare across all component files:
 
 ### Craft (advisory)
 
-Read `reference/design-critique.md` for the full critique framework. Read `reference/design-craft.md` for execution guidance. Apply all six critique layers, evaluating craft execution across these dimensions:
+Read `reference/design-critique.md` for the full critique framework. Read `reference/design-craft.md` for execution guidance. Apply all six critique layers, evaluating four craft dimensions:
 
-**Spatial composition:** density variation between zones (dense for scanning, generous for focus), intentional asymmetry, grid-breaking at focal points, negative space as grouping structure. Uniform spacing everywhere signals undesigned.
-
-**Typography character:** fonts chosen intentionally (not framework defaults), hierarchy works without color (size + weight alone produce three distinguishable tiers), monospace for aligned data.
-
-**Surfaces and depth:** lightness shifts between levels (2-5%, not color jumps), consistent depth strategy (borders-only or subtle-shadows or layered, not mixed), opacity-based borders, complete interactive states on every clickable element.
-
-**Identity:** signature element visible in the interface, committed direction (not half-measures), anti-convergence test (would another AI produce the same output?), atmosphere matches direction (or deliberate absence documented).
+1. **Spatial composition:** density variation between zones, intentional asymmetry, grid-breaking at focal points, negative space as grouping. Uniform spacing everywhere signals undesigned.
+2. **Typography:** hierarchy works without color (size + weight alone produce three tiers), fonts chosen intentionally (not framework defaults), monospace for aligned data.
+3. **Surfaces and depth:** lightness shifts between levels (2-5%, not color jumps), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
+4. **Identity:** signature element visible, committed direction (not half-measures), anti-convergence test, atmosphere matches direction (or deliberate absence).
 
 Flag craft issues as suggestions, not violations.
 
