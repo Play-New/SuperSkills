@@ -152,13 +152,23 @@ Score each layer: **strong**, **adequate**, **weak**. Prioritize based on the us
 
 ### 5. Propose
 
-For each layer scored "weak" or "adequate", propose specific changes:
+The critique identified what's weak. Now apply `reference/design-craft.md` to generate improvements. Work through the relevant craft dimensions for each weak or adequate layer.
+
+**Composition and layout:** spatial composition (density variation between zones, asymmetry, grid-breaking at focal points, negative space as grouping), hierarchy (size + weight + space + position producing three distinguishable tiers), section rhythm (consistent three-number cadence: major sections / groups / items), proportion (focal element visually larger than supporting content), density map (dense where users scan, generous where they focus).
+
+**Craft and surfaces:** surface hierarchy (2-5% lightness shifts between levels, not color jumps), border treatment (opacity-based, not solid), interactive states (hover, focus, active, disabled on every clickable element), typography layering (each level distinct in size + weight + color, hierarchy works without color), depth strategy (one strategy: borders-only or subtle-shadows or layered, not mixed).
+
+**Identity and atmosphere:** direction spectrum (density, temperature, energy, complexity — push intentionally, not default to middle), visual identity (signature element, committed direction, anti-convergence test), atmosphere (gradient, grain, or texture matching direction — or deliberate absence), color intent (every color has a documented job, not just a hex value).
+
+If the design system documents layout architecture, typography scale, or composition rules, proposals must use those values. Section rhythm of 48/24/12 means proposals use 48/24/12. Density map says the metrics zone is generous means proposals give it space. The design system is the constraint, craft principles are the method.
+
+For each proposed change:
 
 | Layer | Current | Proposed | Why |
 |-------|---------|----------|-----|
-| [layer] | [what exists now, specific] | [what to change, specific] | [rationale tied to strategy or craft principle] |
+| [layer] | [what exists now, specific] | [what to change, specific] | [craft principle from design-craft.md + design system constraint] |
 
-Connect proposals to references and design system. Present the full proposal. Wait for user confirmation before implementing.
+Present the full proposal. Wait for user confirmation before implementing.
 
 ### 6. Implement
 
