@@ -142,7 +142,7 @@ Create `.superskills/` directory. Step 7 already created `.superskills/decisions
 [empty — populated by /super:review]
 
 ## Design Findings
-[empty — populated by /super:design or /super:review]
+[empty — populated by /super:review]
 
 ## Test Report
 [empty — populated by /super:review]

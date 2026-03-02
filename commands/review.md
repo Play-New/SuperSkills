@@ -165,13 +165,13 @@ Run the opportunity scan:
 
 ---
 
-## 4. Design (abbreviated)
+## 4. Design
 
-Full design audit is `/super:design`. Review catches the blocking issues.
+Read CLAUDE.md and `.superskills/design-system.md` for context. Read `reference/design-critique.md` for the full critique framework. Work through all six layers (0 through 5).
 
 ### Accessibility (blocking)
 
-WCAG 2.1 AA — 8 checks:
+WCAG 2.1 AA:
 1. Color contrast: 4.5:1 normal text, 3:1 large text
 2. Focus states on all interactive elements
 3. Alt text on all images
@@ -180,6 +180,15 @@ WCAG 2.1 AA — 8 checks:
 6. Semantic HTML: proper heading hierarchy, landmarks, ARIA
 7. Keyboard navigation: all interactive elements reachable via tab
 8. `cursor-pointer` on all clickable elements
+
+### Information Architecture (blocking if widespread)
+
+Read `.superskills/design-system.md` for the IA section. If no IA is documented, skip.
+
+1. **Navigation budget:** compare actual nav items against documented budget
+2. **Focal point:** compare actual visual weight against documented focal points
+3. **Content depth:** check tier violations (enrichment config on surface, delivery outputs buried deep)
+4. **Screen coverage:** compare implemented screens against documented screen map
 
 ### Design System Compliance (blocking if widespread)
 
@@ -198,14 +207,22 @@ Compare across all component files:
 3. **Surface treatment:** same card styles, same border usage, same shadow levels
 4. **Color usage:** same semantic colors for same purposes
 
+### Framework Rules
+
+- **shadcn + Tailwind:** utility classes only, `gap-*` for containers, semantic tokens only, `data-slot` attributes, CVA for variants, spacing matches style preset
+- **Chakra/MUI/Mantine:** all styling through framework APIs, theme overrides in theme file
+- **Tailwind only:** utility classes only, no arbitrary values
+
 ### Craft (advisory)
 
-Four dimensions, same as `/super:design`:
+Read `reference/design-critique.md` for the full critique framework. Read `reference/design-craft.md` for execution guidance. Apply all six critique layers, evaluating four craft dimensions:
 
 1. **Spatial composition:** density variation between zones, intentional asymmetry, grid-breaking at focal points, negative space as grouping. Uniform spacing everywhere signals undesigned.
-2. **Typography:** hierarchy works without color (size + weight alone), three distinguishable tiers, fonts chosen intentionally (not framework defaults).
-3. **Surfaces and depth:** lightness shifts between levels (2-5%), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
-4. **Identity:** signature element visible, committed direction, anti-convergence (would another AI produce this?), atmosphere matching direction or deliberate absence.
+2. **Typography:** hierarchy works without color (size + weight alone produce three tiers), fonts chosen intentionally (not framework defaults), monospace for aligned data.
+3. **Surfaces and depth:** lightness shifts between levels (2-5%, not color jumps), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
+4. **Identity:** signature element visible, committed direction (not half-measures), anti-convergence test, atmosphere matches direction (or deliberate absence).
+
+Flag craft issues as suggestions, not violations.
 
 ---
 

@@ -67,10 +67,10 @@ From that point: the secrets guard watches file writes, skills advise during pla
 | Command | Does |
 |---------|------|
 | `/super:strategy` | Assessment, EIID mapping, value chain, scaffolding, priorities — or alignment review, opportunity scan, and CLAUDE.md refresh |
-| `/super:design` | Three modes: init (direction assessment with references, IA, tokens), redesign (single-screen craft improvement with a target), review (consistency audit) |
+| `/super:design` | Two modes: init (direction assessment with references, IA, tokens) or redesign (single-screen craft improvement with a target) |
 | `/super:review` | Full quality audit: tests, security, strategy alignment, design consistency, performance |
 
-Each command detects whether setup has been done. First run configures. After that, it audits. `/super:design` with a specific target (file path, screenshot, URL) triggers redesign mode.
+Each command detects whether setup has been done. First run configures. `/super:design` with a specific target (file path, screenshot, URL) triggers redesign mode. Design audit lives in `/super:review`.
 
 ## Hooks
 
@@ -167,13 +167,13 @@ The approach lives inside each EIID layer, not in a separate section, because th
 
 ## Design
 
-`/super:design` has three modes:
+`/super:design` has two modes:
 
 **Init mode** explores the product's world, collects references (URLs, screenshots, Figma files, brand assets), defines information architecture grounded in the EIID mapping, defines layout architecture (grid, breakpoints, page patterns), builds a typography scale, establishes composition rules (hierarchy, density, rhythm, proportion, whitespace), and generates a token-based design system.
 
 **Redesign mode** activates when a specific target is provided (file path, screenshot, URL). It loads whatever design context exists (SuperSkills-managed or extracted from code), runs a strategic critique (six layers: strategic alignment, composition, craft, content, structure, identity), collects screen-specific references, then applies four craft dimensions (spatial composition, typography, surfaces and depth, identity) to generate improvements grounded in the design system. Works on any project with a design system, not just SuperSkills projects.
 
-**Review mode** audits consistency, accessibility, and craft across the whole codebase.
+Design audit (accessibility, IA, compliance, consistency, framework rules, craft) lives in `/super:review`.
 
 The design critique starts from strategy. The interface is not the primary input surface: people feed data through their existing channels (chat, email, voice, photos). The interface shows visualizations that don't fit in a message and configuration that controls the system. Interpretation outputs (charts, trends, comparisons) get the most screen space. Enrichment and delivery configuration stays buried. A beautiful interface that misaligns with the value chain is a failure.
 
@@ -209,7 +209,7 @@ The review covers:
 - **Tests:** vitest + Playwright setup (if missing) and full suite run
 - **Security:** OWASP Top 10, GDPR (6 checks), secrets scan, stack-adaptive checks (Supabase RLS, Vercel env vars, Inngest signing keys, Next.js Server Actions)
 - **Strategy:** EIID alignment per file, scope creep detection, 11-question opportunity scan
-- **Design:** accessibility (WCAG 2.1 AA, 8 checks), design system compliance (layout, typography, composition against documented values), cross-file consistency, craft advisory (spatial composition, typography, surfaces and depth, identity)
+- **Design:** accessibility (WCAG 2.1 AA, 8 checks), information architecture (navigation budget, focal points, content depth, screen coverage), design system compliance (layout, typography, composition against documented values), cross-file consistency, framework rules, craft advisory (spatial composition, typography, surfaces and depth, identity)
 - **Performance:** bundle analysis, Core Web Vitals, N+1 queries, API costs, stack-adaptive checks
 
 ## Stack
@@ -239,7 +239,7 @@ superskills/                             the plugin
 │   └── pre-commit                      auto-version on commit
 ├── commands/
 │   ├── strategy.md                     entry point: assessment, EIID, priorities
-│   ├── design.md                       design system: init, redesign, review
+│   ├── design.md                       design system: init, redesign
 │   └── review.md                       full quality audit
 ├── skills/
 │   ├── eiid-awareness/SKILL.md          auto-invoked during planning

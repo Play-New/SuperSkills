@@ -1,5 +1,5 @@
 ---
-description: Design system with craft. First run explores the product, chooses a direction, generates tokens. With a target screen, redesigns it. After that, audits consistency, tokens, accessibility, and craft.
+description: Design system with craft. First run explores the product, chooses a direction, generates tokens. With a target screen, redesigns it.
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash, WebFetch, WebSearch
 ---
 
@@ -7,22 +7,19 @@ allowed-tools: Read, Glob, Grep, Write, Edit, Bash, WebFetch, WebSearch
 
 ## Detect Mode
 
-Three modes. Detection order matters.
+Two modes. Detection order matters.
 
-**1. Did the user provide a specific target?** A file path, screenshot, URL, or description of a specific screen or component. If yes, and a design system exists, run **redesign mode**. If yes but no design system exists, tell the user: "No design system found. Running init first to establish direction and tokens, then we can redesign the screen."
-
-**2. Does a design system exist?** Check for any of these:
+**1. Does a documented design system exist?** Check for:
 - `.superskills/design-system.md` (SuperSkills-managed, full context)
 - `design-system.md` in project root
-- `design-system/` directory (tokens, components, or docs inside)
-- `design-tokens.json` or `tokens.json`
-- `styles/tokens.css` or `styles/variables.css`
-- `globals.css` or `global.css` with CSS custom properties
-- `components.json` (shadcn config)
-- `theme.ts` or `theme.js` or `theme/index.ts`
-- `tailwind.config.ts` or `tailwind.config.js` with custom theme values
+- `design-system/` directory with direction, tokens, and component docs inside
 
-If a design system exists and no specific target was provided, run **review mode**. If no design system exists, run **init mode**.
+Framework config files alone (`components.json`, `tailwind.config.ts`, `globals.css`, `theme.ts`) do NOT count. Those mean a UI framework is installed, not that design decisions have been made.
+
+**2. Route:**
+- **No documented design system** → run **init mode**
+- **Documented design system exists + user provided a target** (file path, screenshot, URL, or description of a specific screen or component) → run **redesign mode**
+- **Documented design system exists + no target** → tell the user: "Design system already exists. Provide a target screen or component to redesign. Run `/review` for a full design audit."
 
 ---
 
@@ -189,72 +186,3 @@ After implementation: update `.superskills/design-system.md` component patterns 
 - If the redesign reveals a design system gap, fix it in the design system, not with a local workaround.
 - Keep what works. Respect what the user said to preserve.
 - Tie every change to strategy or craft. "This looks better" is not a rationale.
-
----
-
-## Review Mode
-
-Read CLAUDE.md and `.superskills/design-system.md` for context. Read `reference/design-critique.md` for the full critique framework. Work through all six layers (0 through 5).
-
-### Accessibility (blocking)
-
-WCAG 2.1 AA:
-1. Color contrast: 4.5:1 normal text, 3:1 large text
-2. Focus states on all interactive elements
-3. Alt text on all images
-4. Labels on all form inputs (not just placeholder)
-5. Touch targets: 44x44px minimum
-6. Semantic HTML: proper heading hierarchy, landmarks, ARIA
-7. Keyboard navigation: all interactive elements reachable via tab
-8. `cursor-pointer` on all clickable elements
-
-### Information Architecture (blocking if widespread)
-
-Read `.superskills/design-system.md` for the IA section. If no IA is documented, skip.
-
-1. **Navigation budget:** compare actual nav items against documented budget
-2. **Focal point:** compare actual visual weight against documented focal points
-3. **Content depth:** check tier violations (enrichment config on surface, delivery outputs buried deep)
-4. **Screen coverage:** compare implemented screens against documented screen map
-
-### Design System Compliance (blocking if widespread)
-
-If `.superskills/design-system.md` has Layout, Typography Scale, and Composition sections, check compliance:
-1. **Layout:** components use documented grid, breakpoints, container strategy, and page patterns. Flag undocumented breakpoints or layouts that bypass the grid.
-2. **Typography:** text elements use levels from the documented scale. Flag sizes or weights not in the scale.
-3. **Composition:** density zones match the documented density map. Section spacing matches the documented rhythm. Flag uniform spacing where the map says it should vary.
-
-### Cross-File Consistency (blocking if widespread)
-
-Compare across all component files:
-1. Type scale: same heading sizes and weights everywhere
-2. Spacing rhythm: consistent spacing multiples across pages
-3. Surface treatment: same card styles, border usage, shadow levels
-4. Color usage: same semantic colors for same purposes
-
-### Framework Rules
-
-- **shadcn + Tailwind:** utility classes only, `gap-*` for containers, semantic tokens only, `data-slot` attributes, CVA for variants, spacing matches style preset
-- **Chakra/MUI/Mantine:** all styling through framework APIs, theme overrides in theme file
-- **Tailwind only:** utility classes only, no arbitrary values
-
-### Craft (advisory)
-
-Read `reference/design-critique.md` for the full critique framework. Read `reference/design-craft.md` for execution guidance. Apply all six critique layers, evaluating four craft dimensions:
-
-1. **Spatial composition:** density variation between zones, intentional asymmetry, grid-breaking at focal points, negative space as grouping. Uniform spacing everywhere signals undesigned.
-2. **Typography:** hierarchy works without color (size + weight alone produce three tiers), fonts chosen intentionally (not framework defaults), monospace for aligned data.
-3. **Surfaces and depth:** lightness shifts between levels (2-5%, not color jumps), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
-4. **Identity:** signature element visible, committed direction (not half-measures), anti-convergence test, atmosphere matches direction (or deliberate absence).
-
-Flag craft issues as suggestions, not violations.
-
-### Output
-
-Write findings to `.superskills/report.md` — **replace** the Design Findings section. Update status counts.
-
-| File:line | Rule | Issue | Fix |
-|-----------|------|-------|-----|
-| path:line | hard/N or framework/N or craft | description | fix |
-
-If new component patterns were established during the review, append them to `.superskills/design-system.md`.
