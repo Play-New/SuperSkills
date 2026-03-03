@@ -1,5 +1,5 @@
 ---
-description: Entry point. Assessment, EIID mapping, scaffolding, priorities. First run builds the project foundation. After that, alignment review and opportunity scan.
+description: Entry point. Assessment, EIID mapping, scaffolding, priorities. First run builds the project foundation. With context about what's changed, refreshes the strategy.
 allowed-tools: Read, Glob, Grep, Write, Edit, WebSearch, WebFetch
 ---
 
@@ -9,7 +9,14 @@ Read `reference/examples/claude-md-saas.md` for tone and structure. Match that l
 
 ## Detect Mode
 
-Check for CLAUDE.md with an EIID mapping section. If it has one, run **review mode**. Otherwise, run **init mode**.
+Two modes. Detection order matters.
+
+**1. Does a strategy exist?** Check for CLAUDE.md with an EIID mapping section.
+
+**2. Route:**
+- **No EIID mapping** → run **init mode**
+- **EIID mapping exists + user provided context about what changed** (business pivot, new users, new data sources, new constraints, market shift) → run **refresh mode**
+- **EIID mapping exists + no context** → tell the user: "Strategy already exists. Provide context about what's changed to refresh it. Run `/review` for a full audit including strategy alignment."
 
 ---
 
@@ -168,61 +175,59 @@ Then start building. The plugin watches what you do. When you want a check, run 
 
 ---
 
-## Review Mode
+## Refresh Mode
 
-### Alignment Check
+Takes an existing strategy and updates it because something changed. Not a consistency audit (that's `/review`). This is re-assessment with new context.
 
-For each file changed recently (use git diff or scan src/):
-1. Which EIID layer does it support? (enrichment / inference / interpretation / delivery / none)
-2. If "none": is it supporting infrastructure (tests, types, config, build, utilities used by EIID layers)? Expected, not scope creep. If it's application code that doesn't serve any EIID layer, flag as potential scope creep.
-3. Any dependency not traceable to the EIID mapping? Flag it.
+### 1. Load Existing Context
 
-### Opportunity Scan
+Read CLAUDE.md and `.superskills/decisions.md`. Understand the current EIID mapping, stack, user context, and decision history.
 
-Check each item against the codebase. Answer yes or no. If yes, describe the opportunity in one sentence.
+### 2. Change Assessment
 
-**Enrichment:**
-1. Any data source connected but not used for inference?
-2. Any two data sources that could be cross-referenced but are not?
-3. Any public API or external data that would fill a gap in the current schema?
+Show the user what the current strategy says (key elements: business, user, EIID layers, approach classifications). Then collect input in a single block. The user answers what's relevant, skips what isn't.
 
-**Inference:**
-4. Any collected data with patterns not being analyzed?
-5. Any prediction the existing data supports but nobody built?
-6. Any anomaly detection that would catch problems before users notice?
+**What changed:** "What's different from when the strategy was created? Business direction, target users, data sources, market, constraints."
 
-**Interpretation:**
-7. Any analysis result generated but not surfaced to users?
-8. Any insight that lacks context (trend, comparison, explanation) to be actionable?
+**What still holds:** "Anything that should stay exactly as is?"
 
-**Delivery:**
-9. Any channel the users frequent that the system does not reach?
-10. Any timing improvement (deliver sooner, deliver at the right moment)?
-11. Any trigger condition that would catch events currently missed?
+**New information:** "Any new research, competitors, tools, or opportunities discovered since the last strategy?"
 
-### CLAUDE.md Refresh
+Skip questions the user already answered in their initial request.
 
-After the alignment check and opportunity scan, compare CLAUDE.md against the actual codebase. Check for drift:
+### 3. Research
 
-1. **Stack:** read package.json. Are there dependencies not reflected in the Stack section? Are documented tools no longer installed? Update the Stack section and regenerate Technology Constraints.
-2. **EIID mapping:** are there EIID layers documented but empty in code, or developed in code but missing from the mapping? Has a component's approach changed (e.g., something classified as "innovate" is now commodity, or "automate" was custom-built instead)? Update the mapping to reflect what actually exists.
-3. **User/Business:** if the alignment check or opportunity scan revealed a shift in user need or business context, flag it. Do not auto-update these sections without user confirmation.
+Search the web focused on what changed. If the user says "new competitor" or "different market", research that. If data sources changed, research what's available. Same approach as init mode step 4, but scoped to the delta.
 
-If drift is found in 1-2: show the proposed CLAUDE.md changes, get user confirmation, then apply. If drift is found in 3: flag it and ask the user.
+### 4. Update EIID Mapping
 
-If no drift is found, skip this step.
+Rebuild the value chain from the updated context. For each component:
+- **Still valid?** Keep as is.
+- **Evolution changed?** Something that was "innovate" might now be commodity (competitors caught up). Something classified as "automate" might need custom work (off-the-shelf doesn't fit anymore). Reclassify.
+- **New components?** New data sources, new inference patterns, new delivery channels. Add them.
+- **Removed?** Components that no longer apply. Remove them.
 
-### Output
+Map to the same four layers (Enrichment, Inference, Interpretation, Delivery) with updated content.
 
-Read CLAUDE.md for project context. **Append** each finding to `.superskills/decisions.md` (append-only — it is a decision log, history matters):
+### 5. Update Priorities
+
+Reclassify each EIID element: automate / differentiate / innovate. Set updated priorities. What changed from last time?
+
+### 6. Rewrite CLAUDE.md
+
+Follow the same structure as init mode step 8. **Show the full updated CLAUDE.md to the user before writing.** Highlight what changed from the previous version. Ask for confirmation.
+
+### 7. Log Decision
+
+Append to `.superskills/decisions.md`:
 
 ```
-### [date] - [title]
+### [date] - Strategy Refresh
 
-**Type:** alignment-check | opportunity | drift-warning | decision
-**Summary:** [1-2 sentences]
-**EIID Layer:** [enrichment / inference / interpretation / delivery / none]
-**Action:** [what to do about it]
+**Type:** decision
+**Summary:** [what changed and why]
+**Changes:** [list of EIID mapping changes, reclassifications, new/removed components]
+**Action:** [updated priorities]
 ```
 
 ---
